@@ -1,4 +1,5 @@
 
+// Forçando a limpeza de cache do Vercel
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
