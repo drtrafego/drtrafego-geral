@@ -13,8 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Eye, Target, TrendingUp, CheckCircle, XCircle, Store, Search, Building, Rocket, ClipboardList, ShieldCheck, Anchor, Scaling, CircleDollarSign, Building2, RotateCw, SearchX, FileText, CalendarDays } from 'lucide-react';
 
 const GlassCard = ({ children, className }: { children: React.ReactNode, className?: string }) => (
-  <div className={`bg-white/5 border border-white/10 rounded-2xl backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(156,39,176,0.2)] ${className}`}>
+  <div className={`group relative p-8 rounded-3xl bg-slate-900/20 backdrop-blur-xl border border-white/10 transition-all duration-300 hover:bg-slate-900/30 hover:border-white/20 hover:-translate-y-1 ${className}`}>
     {children}
+    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
   </div>
 );
 
@@ -36,18 +37,19 @@ const XListItem = ({ children }: { children: React.ReactNode }) => (
 // Trigger Vercel deploy
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#0A091A] text-white font-sans overflow-x-hidden">
-
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#1a103c] via-[#0a091a] to-[#0a091a] -z-10"></div>
-      <div className="absolute top-[-20rem] left-[-20rem] w-[50rem] h-[50rem] bg-[radial-gradient(circle,rgba(156,39,176,0.3)_0%,rgba(156,39,176,0)_70%)] -z-10"></div>
-      <div className="absolute bottom-[-20rem] right-[-20rem] w-[50rem] h-[50rem] bg-[radial-gradient(circle,rgba(88,28,135,0.3)_0%,rgba(88,28,135,0)_70%)] -z-10"></div>
-
-      <main className="flex-1">
+    <div className="text-white font-sans">
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#1a103c] via-[#0a091a] to-[#0a091a]" />
+        <div className="absolute top-[-20rem] left-[-20rem] w-[50rem] h-[50rem] bg-purple-glow" />
+        <div className="absolute bottom-[-20rem] right-[-20rem] w-[50rem] h-[50rem] bg-fuchsia-glow" />
+      </div>
+      
+      <main className="relative z-10 flex flex-col min-h-screen bg-[#0A091A]">
         {/* Hero Section */}
         <section className="w-full pt-32 pb-16 md:pt-40 md:pb-20 text-center relative">
             <div className="container px-4 md:px-6">
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 leading-tight shadow-[0_0_40px_rgba(156,39,176,0.4)]">
+                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 leading-normal shadow-[0_0_40px_rgba(156,39,176,0.4)]">
                         Aumente seu faturamento, atraia os clientes certos e impulsione suas vendas com presença digital estratégica.
                     </h1>
                     <p className="mt-8 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">

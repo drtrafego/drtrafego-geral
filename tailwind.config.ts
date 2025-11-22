@@ -10,9 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'purple-glow': 'radial-gradient(circle, rgba(156, 39, 176, 0.3) 0%, rgba(156, 39, 176, 0) 70%)',
+        'fuchsia-glow': 'radial-gradient(circle, rgba(88, 28, 135, 0.3) 0%, rgba(88, 28, 135, 0) 70%)',
       },
     },
   },
