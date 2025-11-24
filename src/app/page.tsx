@@ -46,26 +46,35 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
+    console.log('Formulário enviado. Enviando dados...');
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, phone }),
-      });
-
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, phone }),
+    })
+    .then(response => {
+      console.log('Resposta da API recebida. Status:', response.status);
       if (response.ok) {
-        router.push('/obrigado');
+        console.log('Resposta OK. Redirecionando para /obrigado...');
+        window.location.href = '/obrigado';
       } else {
-        console.error('Falha ao enviar o formulário');
+        // Em caso de erro, loga o erro mas não impede o fluxo
+        response.json().then(errorData => {
+          console.error('Falha na API. Status:', response.status, 'Erro:', errorData);
+        }).catch(() => {
+          // Se o corpo do erro não for JSON, apenas loga o status
+          console.error('Falha na API. Status:', response.status);
+        });
       }
-    } catch (error) {
-      console.error('Erro ao enviar o formulário:', error);
-    }
+    })
+    .catch(error => {
+      console.error('Erro de rede ou exceção no fetch:', error);
+    });
   };
 
   return (
@@ -360,7 +369,7 @@ export default function Home() {
                     <p className="text-lg text-gray-300 mt-4">Preencha o formulário e nossa equipe entrará em contato para agendar uma conversa sem compromisso.</p>
                 </div>
                 <GlassCard className="p-8 md:p-12">
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form className="space-y-6">
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Nome</label>
                             <Input id="name" name="name" type="text" placeholder="Seu nome completo" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={name} onChange={(e) => setName(e.target.value)} />
@@ -373,7 +382,7 @@ export default function Home() {
                             <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">Telefone / WhatsApp</label>
                             <Input id="phone" name="phone" type="tel" placeholder="(XX) XXXXX-XXXX" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={phone} onChange={(e) => setPhone(e.target.value)} />
                         </div>
-                        <Button type="submit" size="lg" className="w-full bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-14 text-lg">
+                        <Button type="button" onClick={handleSubmit} size="lg" className="w-full bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-14 text-lg">
                             Quero aumentar meu faturamento
                         </Button>
                     </form>
