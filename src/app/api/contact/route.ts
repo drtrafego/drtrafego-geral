@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await sql`
-      INSERT INTO "Leads" (name, email, phone)
+      INSERT INTO public."Leads" (name, email, phone)
       VALUES (${name}, ${email}, ${phone})
       ON CONFLICT (email) DO UPDATE SET
         name = EXCLUDED.name,
