@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Conecta ao Neon e insere o novo lead.
-    await sql`INSERT INTO Leads (name, email, phone) VALUES (${name}, ${email}, ${phone});`;
+    await sql`INSERT INTO Leads (name, email, phone) VALUES (${name}, ${email}, ${phone}) ON CONFLICT (email) DO NOTHING;`;
 
     return NextResponse.json({ message: 'Lead cadastrado com sucesso!' }, { status: 201 });
 
