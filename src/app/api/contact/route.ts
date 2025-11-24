@@ -12,10 +12,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Nome, email e telefone são obrigatórios.' }, { status: 400 });
     }
 
-    // Conecta ao Neon e insere o novo lead.
-    await sql`INSERT INTO Leads (name, email, phone) VALUES (${name}, ${email}, ${phone}) ON CONFLICT (email) DO NOTHING;`;
+    // Tenta inserir o novo lead e retorna os dados inseridos
+    const result = await sql`
+      INSERT INTO Leads (name, email, phone) 
+      VALUES (${name}, ${email}, ${phone}) 
+      ON CONFLICT (email) DO NOTHING 
+      RETURNING *;
+    `;
 
-    return NextResponse.json({ message: 'Lead cadastrado com sucesso!' }, { status: 201 });
+    // Verifica se a inserção realmente aconteceu
+    if (result.length > 0) {
+      console.log('Novo lead inserido:', result[0]);
+      return NextResponse.json({ message: 'Lead cadastrado com sucesso!', lead: result[0] }, { status: 201 });
+    } else {
+      console.log('Lead com este email já existe. Nenhuma ação foi tomada.');
+      return NextResponse.json({ message: 'Lead com este email já existe.' }, { status: 200 });
+    }
 
   } catch (error) {
     console.error('Erro ao processar a requisição:', error);
