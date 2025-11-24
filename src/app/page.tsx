@@ -1,4 +1,5 @@
 
+"use client";
 // Forçando a limpeza de cache do Vercel
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -10,7 +11,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
-import { Eye, Target, TrendingUp, CheckCircle, XCircle, Store, Search, Building, Rocket, ClipboardList, ShieldCheck, Anchor, Scaling, CircleDollarSign, Building2, RotateCw, SearchX, FileText, CalendarDays } from 'lucide-react';
+import { Eye, Target, TrendingUp, CheckCircle, XCircle, Store, Search, Building, Rocket, ClipboardList, ShieldCheck, Anchor, Scaling, CircleDollarSign, Building2, RotateCw, SearchX, FileText, CalendarDays, Smartphone } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+
 
 const GlassCard = ({ children, className }: { children: React.ReactNode, className?: string }) => (
   <div className={`group relative p-8 rounded-3xl bg-slate-900/20 backdrop-blur-xl border border-white/10 transition-all duration-300 hover:bg-slate-900/30 hover:border-white/20 hover:-translate-y-1 ${className}`}>
@@ -36,6 +41,33 @@ const XListItem = ({ children }: { children: React.ReactNode }) => (
 
 // Trigger Vercel deploy
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, phone }),
+      });
+
+      if (response.ok) {
+        router.push('/obrigado');
+      } else {
+        console.error('Falha ao enviar o formulário');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar o formulário:', error);
+    }
+  };
+
   return (
     <div className="text-white font-sans">
       <div className="fixed inset-0 -z-10 overflow-hidden">
@@ -125,34 +157,50 @@ export default function Home() {
             </div>
         </section>
 
-        {/* Por que o digital */}
-        <section className="py-12 md:py-16">
-            <div className="container px-4 md:px-6 max-w-7xl mx-auto">
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500">POR QUE O DIGITAL É SEU MAIOR CANAL DE CRESCIMENTO</h2>
-                    <p className="text-lg text-gray-300 mt-4">Hoje, a internet é:</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <GlassCard className="p-8 text-center hover:border-purple-400/50 transition-colors">
-                        <Building className="w-12 h-12 mx-auto mb-4 text-purple-400"/>
-                        <h3 className="text-2xl font-bold text-white mb-4">A rua mais movimentada do mundo</h3>
-                    </GlassCard>
-                    <GlassCard className="p-8 text-center hover:border-purple-400/50 transition-colors">
-                        <Search className="w-12 h-12 mx-auto mb-4 text-purple-400"/>
-                        <h3 className="text-2xl font-bold text-white mb-4">O maior buscador de soluções</h3>
-                    </GlassCard>
-                    <GlassCard className="p-8 text-center hover:border-purple-400/50 transition-colors">
-                        <Store className="w-12 h-12 mx-auto mb-4 text-purple-400"/>
-                        <h3 className="text-2xl font-bold text-white mb-4">O shopping que nunca fecha</h3>
-                    </GlassCard>
-                    <GlassCard className="p-8 text-center hover:border-purple-400/50 transition-colors">
-                        <Target className="w-12 h-12 mx-auto mb-4 text-purple-400"/>
-                        <h3 className="text-2xl font-bold text-white mb-4">O único lugar onde você anuncia direto para quem já procura você</h3>
-                    </GlassCard>
-                </div>
-                <p className="text-center text-xl text-gray-300 mt-16 max-w-4xl mx-auto">Se sua empresa não estiver aqui, estrategicamente, você está <span className="text-red-400 font-semibold">cedendo espaço para o concorrente.</span></p>
-            </div>
-        </section>
+        {/* --- SEÇÃO: POR QUE O DIGITAL (COM EFEITO DE LUZ NEON/GLOW) --- */} 
+         <section className="py-24 relative overflow-hidden"> 
+             {/* O "ORB" DE LUZ ROXA: Este é o elemento que cria o brilho de fundo */} 
+             <div 
+               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+                          w-[600px] h-[600px] md:w-[1000px] md:h-[1000px] 
+                          bg-purple-700/40 rounded-full blur-[120px] opacity-80 -z-10 pointer-events-none" 
+             ></div> 
+             
+             <div className="relative z-10 container px-4 md:px-6 max-w-7xl mx-auto"> 
+                 <div className="text-center max-w-3xl mx-auto mb-16"> 
+                     <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500"> 
+                         POR QUE O DIGITAL É SEU MAIOR CANAL DE CRESCIMENTO 
+                     </h2> 
+                     <p className="text-lg text-gray-300 mt-4">Hoje, a internet é:</p> 
+                 </div> 
+                 
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"> 
+                     <GlassCard className="p-8 flex flex-col items-center text-center group"> 
+                         <Smartphone className="w-12 h-12 mb-6 text-purple-400 group-hover:scale-110 transition-transform"/> 
+                         <h3 className="text-xl font-bold text-white">A rua mais movimentada do mundo</h3> 
+                     </GlassCard> 
+                     
+                     <GlassCard className="p-8 flex flex-col items-center text-center group"> 
+                         <Search className="w-12 h-12 mb-6 text-purple-400 group-hover:scale-110 transition-transform"/> 
+                         <h3 className="text-xl font-bold text-white">O maior buscador de soluções</h3> 
+                     </GlassCard> 
+                     
+                     <GlassCard className="p-8 flex flex-col items-center text-center group"> 
+                         <Store className="w-12 h-12 mb-6 text-purple-400 group-hover:scale-110 transition-transform"/> 
+                         <h3 className="text-xl font-bold text-white">O shopping que nunca fecha</h3> 
+                     </GlassCard> 
+                     
+                     <GlassCard className="p-8 flex flex-col items-center text-center group"> 
+                         <Target className="w-12 h-12 mb-6 text-purple-400 group-hover:scale-110 transition-transform"/> 
+                         <h3 className="text-xl font-bold text-white">O único lugar onde você anuncia direto para quem já procura você</h3> 
+                     </GlassCard> 
+                 </div> 
+                 
+                 <p className="text-center text-xl text-gray-300 mt-16 max-w-4xl mx-auto"> 
+                     Se sua empresa não estiver aqui, estrategicamente, você está <span className="text-red-400 font-semibold">cedendo espaço para o concorrente.</span> 
+                 </p> 
+             </div> 
+         </section>
 
         {/* O Problema */}
         <section className="py-12 md:py-16">
@@ -312,18 +360,18 @@ export default function Home() {
                     <p className="text-lg text-gray-300 mt-4">Preencha o formulário e nossa equipe entrará em contato para agendar uma conversa sem compromisso.</p>
                 </div>
                 <GlassCard className="p-8 md:p-12">
-                    <form className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Nome</label>
-                            <Input id="name" name="name" type="text" placeholder="Seu nome completo" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" />
+                            <Input id="name" name="name" type="text" placeholder="Seu nome completo" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={name} onChange={(e) => setName(e.target.value)} />
                         </div>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                            <Input id="email" name="email" type="email" placeholder="seu.email@exemplo.com" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" />
+                            <Input id="email" name="email" type="email" placeholder="seu.email@exemplo.com" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={email} onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div>
                             <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">Telefone / WhatsApp</label>
-                            <Input id="phone" name="phone" type="tel" placeholder="(XX) XXXXX-XXXX" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" />
+                            <Input id="phone" name="phone" type="tel" placeholder="(XX) XXXXX-XXXX" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={phone} onChange={(e) => setPhone(e.target.value)} />
                         </div>
                         <Button type="submit" size="lg" className="w-full bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-14 text-lg">
                             Quero aumentar meu faturamento
