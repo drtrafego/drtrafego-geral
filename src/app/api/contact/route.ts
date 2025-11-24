@@ -1,7 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import { NextRequest, NextResponse } from 'next/server';
 
-// Inicializa o cliente do Neon com a string de conexão
 const sql = neon(process.env.DATABASE_URL!);
 
 export async function POST(request: NextRequest) {
@@ -12,21 +11,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Nome, email e telefone são obrigatórios.' }, { status: 400 });
     }
 
-    // Tenta inserir o novo lead e retorna os dados inseridos
     const result = await sql`
-      INSERT INTO Leads (name, email, phone) 
-      VALUES (${name}, ${email}, ${phone}) 
-      ON CONFLICT (email) DO NOTHING 
+      INSERT INTO Leads (name, email, phone)
+      VALUES (${name}, ${email}, ${phone})
+      ON CONFLICT (email) DO UPDATE SET
+        name = EXCLUDED.name,
+        phone = EXCLUDED.phone,
+        updated_at = NOW()
       RETURNING *;
     `;
 
-    // Verifica se a inserção realmente aconteceu
     if (result.length > 0) {
-      console.log('Novo lead inserido:', result[0]);
-      return NextResponse.json({ message: 'Lead cadastrado com sucesso!', lead: result[0] }, { status: 201 });
+      console.log('Lead inserido ou atualizado:', result[0]);
+      return NextResponse.json({ message: 'Lead cadastrado ou atualizado com sucesso!', lead: result[0] }, { status: 201 });
     } else {
-      console.log('Lead com este email já existe. Nenhuma ação foi tomada.');
-      return NextResponse.json({ message: 'Lead com este email já existe.' }, { status: 200 });
+      console.error('Falha ao inserir ou atualizar o lead.');
+      return NextResponse.json({ message: 'Falha ao processar o lead.' }, { status: 500 });
     }
 
   } catch (error) {
