@@ -1,6 +1,8 @@
-
-import { sql } from '@neondatabase/serverless/sql';
+import { neon } from '@neondatabase/serverless';
 import { NextRequest, NextResponse } from 'next/server';
+
+// Inicializa o cliente do Neon com a string de conexão
+const sql = neon(process.env.DATABASE_URL!);
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,7 +13,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Conecta ao Neon e insere o novo lead.
-    // A string de conexão é pega automaticamente do arquivo .env.local (variável DATABASE_URL)
     await sql`INSERT INTO Leads (name, email, phone) VALUES (${name}, ${email}, ${phone});`;
 
     return NextResponse.json({ message: 'Lead cadastrado com sucesso!' }, { status: 201 });
