@@ -1,53 +1,122 @@
-# Projeto: Landing Page para Captação de Clientes (Tráfego Pago)
+# Projeto: Landing Page de Alta Conversão para Captação de Leads
 
-## Objetivo Principal
-Desenvolver um site de uma página (Landing Page) com o objetivo de capturar leads (clientes interessados) para serviços de gestão de tráfego pago.
+## 1. Visão Geral e Objetivo
 
-## Estrutura Planejada
-O site será composto pelas seguintes seções:
-1.  **Header:** Navegação principal e um Call-to-Action (CTA) claro.
-2.  **Seção Hero:** Uma mensagem de impacto inicial para prender a atenção do visitante.
-3.  **Serviços:** Descrição dos serviços de tráfego pago oferecidos.
-4.  **Cases de Sucesso:** Prova social com exemplos de resultados de clientes.
-5.  **Contato:** Formulário para captação de leads.
+O objetivo deste projeto é desenvolver uma landing page de uma única página, otimizada para performance e conversão, com o propósito de capturar leads qualificados para serviços de gestão de tráfego pago.
 
-## Tecnologias
-- **Frontend:** Next.js (React)
-- **Estilização:** Tailwind CSS
-- **Deploy:** Vercel
+A página foi projetada para ser visualmente impactante, com uma narrativa clara que guia o visitante desde a apresentação do problema até a solução, culminando em um formulário de contato.
 
-## Integração da Captura de Leads com Neon
+---
 
-A seção de contato foi integrada a um banco de dados PostgreSQL hospedado na Neon para armazenar os leads capturados pelo formulário.
+## 2. Tech Stack & Dependências
 
-- **API Endpoint:** Foi criado um endpoint em `src/app/api/contact/route.ts` que recebe os dados do formulário (nome, email e telefone).
+A aplicação é construída com as seguintes tecnologias:
 
-- **Banco de Dados:**
-  - A tabela `Leads` (schema `public`) armazena as informações.
-  - **Estrutura da Tabela:**
-    ```sql
-    CREATE TABLE "Leads" (
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(255),
-      email VARCHAR(255) UNIQUE,
-      phone VARCHAR(255),
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-      updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-    );
+- **Framework Principal:** [Next.js](https://nextjs.org/) 14+ (com App Router)
+- **Linguagem:** TypeScript
+- **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
+- **Componentes UI:** [Shadcn/UI](https://ui.shadcn.com/) (base para componentes como Button, Card, Input, etc.)
+- **Ícones:** [Lucide React](https://lucide.dev/guide/packages/lucide-react)
+- **Banco de Dados:** [Neon](https://neon.tech/) (PostgreSQL Serverless)
+- **ORM/Query Builder:** `@neondatabase/serverless` para conexão direta com o banco.
+- **Deploy:** [Vercel](https://vercel.com/)
+
+### Scripts Principais (`package.json`):
+- `npm run dev`: Inicia o servidor de desenvolvimento local.
+- `npm run build`: Compila a aplicação para produção.
+- `npm run start`: Inicia um servidor de produção após o build.
+- `npm run lint`: Executa o linter para análise de código.
+
+---
+
+## 3. Estrutura de Arquivos
+
+A estrutura do projeto segue o padrão do Next.js App Router.
+
+```
+/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── contact/
+│   │   │       └── route.ts    # Endpoint da API para salvar leads no DB.
+│   │   ├── obrigado/
+│   │   │   └── page.tsx        # Página de agradecimento pós-envio do form.
+│   │   ├── globals.css         # Estilos globais e configuração do Tailwind.
+│   │   ├── layout.tsx          # Layout principal da aplicação.
+│   │   └── page.tsx            # Componente principal da Landing Page.
+│   │
+│   ├── components/
+│   │   └── ui/                 # Componentes reutilizáveis (ex: Button, Input).
+│   │
+│   └── lib/
+│       └── utils.ts            # Funções utilitárias (ex: `cn` do Tailwind Merge).
+│
+├── public/                     # Arquivos estáticos (imagens, fontes).
+│
+├── .env.local                  # Arquivo para variáveis de ambiente (NÃO versionado).
+├── next.config.mjs             # Configurações do Next.js.
+├── tailwind.config.ts          # Configurações do Tailwind CSS.
+└── PROJETO.md                  # Esta documentação.
+```
+
+---
+
+## 4. Como Executar o Projeto Localmente
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone <URL_DO_REPOSITORIO>
     ```
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
+3.  **Configure as Variáveis de Ambiente:**
+    - Crie um arquivo `.env.local` na raiz do projeto.
+    - Adicione a connection string do banco de dados Neon:
+      ```
+      DATABASE_URL="postgres://user:password@host/dbname"
+      ```
+4.  **Inicie o servidor de desenvolvimento:**
+    ```bash
+    npm run dev
+    ```
+5.  Acesse [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-- **Lógica de Armazenamento (UPSERT):**
-  - Para evitar a duplicação de leads, foi implementada uma lógica de `UPSERT` (`INSERT ... ON CONFLICT DO UPDATE`).
-  - Se um lead com o mesmo email já existe, seus dados (nome e telefone) e a data de atualização (`updated_at`) são atualizados.
-  - Caso contrário, um novo lead é inserido na tabela.
-  - Essa abordagem garante que a base de contatos esteja sempre atualizada sem criar registros duplicados.
+---
 
-- **Deploy na Vercel:**
-  - A comunicação entre a aplicação na Vercel e o banco de dados Neon foi estabelecida com sucesso.
-  - Foi necessário qualificar o nome da tabela com o schema (`public."Leads"`) nas queries SQL para resolver erros de "relação não encontrada" que ocorriam apenas no ambiente de produção.
-  - A variável de ambiente `DATABASE_URL` foi configurada no painel da Vercel para garantir a conexão segura.
+## 5. Funcionalidades Implementadas
 
-## Próximos Passos
-1.  Estruturar o projeto técnico (criar a base do Next.js).
-2.  Desenvolver cada uma das seções da página.
-3.  Integrar a copy e o design que serão fornecidos.
+### 5.1. Captura e Armazenamento de Leads
+
+A principal funcionalidade da página é a captura de leads através de um formulário de contato.
+
+-   **Endpoint:** `POST /api/contact` (`src/app/api/contact/route.ts`)
+-   **Validação:** A validação dos dados ocorre no frontend antes do envio.
+-   **Banco de Dados:** Os leads são armazenados em uma tabela `Leads` no banco de dados PostgreSQL (Neon).
+-   **Lógica de UPSERT:** Para evitar duplicatas, a API utiliza uma lógica `INSERT ... ON CONFLICT DO UPDATE`. Se um email já cadastrado for enviado, os dados do lead (nome, telefone) são atualizados, e a data `updated_at` é renovada. Isso mantém a base de dados limpa e atualizada.
+
+#### Estrutura da Tabela `Leads`
+```sql
+CREATE TABLE "Leads" (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255) UNIQUE,
+  phone VARCHAR(255),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
+
+### 5.2. Redirecionamento Pós-Cadastro
+
+Após o envio bem-sucedido do formulário, o usuário é redirecionado para a página de agradecimento em `/obrigado`.
+
+---
+
+## 6. Deploy (Vercel)
+
+-   **Conexão com GitHub:** O projeto está conectado a um repositório no GitHub, e o deploy é acionado automaticamente a cada `push` na branch `main`.
+-   **Variáveis de Ambiente:** A variável `DATABASE_URL` foi configurada diretamente no painel de configurações do projeto na Vercel para garantir a conexão segura com o banco de dados em produção.
+-   **Observação Importante:** Durante o desenvolvimento, foi identificado que as queries SQL no ambiente Vercel exigem a qualificação explícita do schema (`public."Leads"`). Isso foi corrigido no código da API para garantir a comunicação com o banco de dados.
