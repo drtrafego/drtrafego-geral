@@ -500,6 +500,19 @@ export default function Home() {
         </section>
       </main>
 
+      <footer className="py-8 border-t border-white/10 bg-[#050510] text-center">
+        <div className="container px-4 mx-auto">
+          <p className="font-bold text-lg text-white mb-2">Construa Seu Sucesso</p>
+          <p className="text-gray-400 mb-1">Estratégia Digital e Tráfego Pago</p>
+          <p className="text-gray-500 text-sm mb-4">Atendimento em todo o Brasil 🇧🇷</p>
+          <div className="flex justify-center items-center gap-2 text-gray-600 text-xs mb-4">
+             <span>Av. Paulista, 1000 - São Paulo, SP</span>
+          </div>
+          <p className="text-gray-600 text-xs">
+            © {new Date().getFullYear()} Construa Seu Sucesso. Todos os direitos reservados.
+          </p>
+        </div>
+      </footer>
 
     </div>
   );
