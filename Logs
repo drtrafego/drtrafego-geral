@@ -1,0 +1,73 @@
+Nov 24 15:05:58.71
+POST
+500
+drtrafego-geral.vercel.app
+/api/contact
+Erro ao processar a requisição: NeonDbError: duplicate key value violates unique constraint "leads_email_key" at tP.execute (/var/task/.next/server/app/api/contact/route.js:29:3670) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async tN (/var/task/.next/server/app/api/contact/route.js:33:584) at async /var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38411 at async e_.execute (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:27880) at async e_.handle (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:39943) at async en (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:16:25561) at async ea.responseCache.get.routeKind (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:1028) at async r9.renderToResponseWithComponentsImpl (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:508) at async r9.renderPageComponent (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:5102) { severity: 'ERROR', code: '23505', detail: 'Key (email)=(contato@drtrafego.com) already exists.', hint: undefined, position: undefined, internalPosition: undefined, internalQuery: undefined, where: undefined, schema: 'public', table: 'leads', column: undefined, dataType: undefined, constraint: 'leads_email_key', file: 'nbtinsert.c', line: '667', routine: '_bt_check_unique', sourceError: undefined }
+Nov 24 15:05:52.11
+GET
+304
+drtrafego-geral.vercel.app
+/
+Nov 24 15:05:28.91
+GET
+200
+drtrafego-geral-6agbm64kd-gastaos-projects.vercel.app
+/
+Nov 24 15:05:23.80
+POST
+500
+drtrafego-geral.vercel.app
+/api/contact
+Erro ao processar a requisição: NeonDbError: duplicate key value violates unique constraint "leads_email_key" at tP.execute (/var/task/.next/server/app/api/contact/route.js:29:3670) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async tN (/var/task/.next/server/app/api/contact/route.js:33:584) at async /var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38411 at async e_.execute (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:27880) at async e_.handle (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:39943) at async en (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:16:25561) at async ea.responseCache.get.routeKind (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:1028) at async r9.renderToResponseWithComponentsImpl (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:508) at async r9.renderPageComponent (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:5102) { severity: 'ERROR', code: '23505', detail: 'Key (email)=(contato@drtrafego.com) already exists.', hint: undefined, position: undefined, internalPosition: undefined, internalQuery: undefined, where: undefined, schema: 'public', table: 'leads', column: undefined, dataType: undefined, constraint: 'leads_email_key', file: 'nbtinsert.c', line: '667', routine: '_bt_check_unique', sourceError: undefined }
+Nov 24 15:05:00.30
+POST
+500
+drtrafego-geral.vercel.app
+/api/contact
+Erro ao processar a requisição: NeonDbError: duplicate key value violates unique constraint "leads_email_key" at tP.execute (/var/task/.next/server/app/api/contact/route.js:29:3670) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async tN (/var/task/.next/server/app/api/contact/route.js:33:584) at async /var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38411 at async e_.execute (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:27880) at async e_.handle (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:39943) at async en (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:16:25561) at async ea.responseCache.get.routeKind (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:1028) at async r9.renderToResponseWithComponentsImpl (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:508) at async r9.renderPageComponent (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:5102) { severity: 'ERROR', code: '23505', detail: 'Key (email)=(contato@drtrafego.com) already exists.', hint: undefined, position: undefined, internalPosition: undefined, internalQuery: undefined, where: undefined, schema: 'public', table: 'leads', column: undefined, dataType: undefined, constraint: 'leads_email_key', file: 'nbtinsert.c', line: '667', routine: '_bt_check_unique', sourceError: undefined }
+Nov 24 15:04:43.17
+POST
+500
+drtrafego-geral.vercel.app
+/api/contact
+Erro ao processar a requisição: NeonDbError: duplicate key value violates unique constraint "leads_email_key" at tP.execute (/var/task/.next/server/app/api/contact/route.js:29:3670) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async tN (/var/task/.next/server/app/api/contact/route.js:33:584) at async /var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38411 at async e_.execute (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:27880) at async e_.handle (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:39943) at async en (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:16:25561) at async ea.responseCache.get.routeKind (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:1028) at async r9.renderToResponseWithComponentsImpl (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:508) at async r9.renderPageComponent (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:5102) { severity: 'ERROR', code: '23505', detail: 'Key (email)=(contato@drtrafego.com) already exists.', hint: undefined, position: undefined, internalPosition: undefined, internalQuery: undefined, where: undefined, schema: 'public', table: 'leads', column: undefined, dataType: undefined, constraint: 'leads_email_key', file: 'nbtinsert.c', line: '667', routine: '_bt_check_unique', sourceError: undefined }
+Nov 24 15:04:25.15
+POST
+500
+drtrafego-geral.vercel.app
+/api/contact
+Erro ao processar a requisição: NeonDbError: duplicate key value violates unique constraint "leads_email_key" at tP.execute (/var/task/.next/server/app/api/contact/route.js:29:3670) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async tN (/var/task/.next/server/app/api/contact/route.js:33:584) at async /var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38411 at async e_.execute (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:27880) at async e_.handle (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:39943) at async en (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:16:25561) at async ea.responseCache.get.routeKind (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:1028) at async r9.renderToResponseWithComponentsImpl (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:508) at async r9.renderPageComponent (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:5102) { severity: 'ERROR', code: '23505', detail: 'Key (email)=(contato@drtrafego.com) already exists.', hint: undefined, position: undefined, internalPosition: undefined, internalQuery: undefined, where: undefined, schema: 'public', table: 'leads', column: undefined, dataType: undefined, constraint: 'leads_email_key', file: 'nbtinsert.c', line: '667', routine: '_bt_check_unique', sourceError: undefined }
+Nov 24 15:04:23.61
+POST
+500
+drtrafego-geral.vercel.app
+/api/contact
+Erro ao processar a requisição: NeonDbError: duplicate key value violates unique constraint "leads_email_key" at tP.execute (/var/task/.next/server/app/api/contact/route.js:29:3670) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async tN (/var/task/.next/server/app/api/contact/route.js:33:584) at async /var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38411 at async e_.execute (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:27880) at async e_.handle (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:39943) at async en (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:16:25561) at async ea.responseCache.get.routeKind (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:1028) at async r9.renderToResponseWithComponentsImpl (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:508) at async r9.renderPageComponent (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:5102) { severity: 'ERROR', code: '23505', detail: 'Key (email)=(contato@drtrafego.com) already exists.', hint: undefined, position: undefined, internalPosition: undefined, internalQuery: undefined, where: undefined, schema: 'public', table: 'leads', column: undefined, dataType: undefined, constraint: 'leads_email_key', file: 'nbtinsert.c', line: '667', routine: '_bt_check_unique', sourceError: undefined }
+Nov 24 15:04:05.06
+GET
+304
+drtrafego-geral.vercel.app
+/
+Nov 24 15:04:03.10
+GET
+200
+drtrafego-geral.vercel.app
+/
+Nov 24 15:03:50.42
+POST
+500
+drtrafego-geral.vercel.app
+/api/contact
+Erro ao processar a requisição: NeonDbError: duplicate key value violates unique constraint "leads_email_key" at tP.execute (/var/task/.next/server/app/api/contact/route.js:29:3670) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async tN (/var/task/.next/server/app/api/contact/route.js:33:584) at async /var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38411 at async e_.execute (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:27880) at async e_.handle (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:39943) at async en (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:16:25561) at async ea.responseCache.get.routeKind (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:1028) at async r9.renderToResponseWithComponentsImpl (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:508) at async r9.renderPageComponent (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:5102) { severity: 'ERROR', code: '23505', detail: 'Key (email)=(contato@drtrafego.com) already exists.', hint: undefined, position: undefined, internalPosition: undefined, internalQuery: undefined, where: undefined, schema: 'public', table: 'leads', column: undefined, dataType: undefined, constraint: 'leads_email_key', file: 'nbtinsert.c', line: '667', routine: '_bt_check_unique', sourceError: undefined }
+Nov 24 15:03:36.89
+POST
+500
+drtrafego-geral.vercel.app
+/api/contact
+Erro ao processar a requisição: NeonDbError: duplicate key value violates unique constraint "leads_email_key" at tP.execute (/var/task/.next/server/app/api/contact/route.js:29:3670) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async tN (/var/task/.next/server/app/api/contact/route.js:33:584) at async /var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38411 at async e_.execute (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:27880) at async e_.handle (/var/task/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:39943) at async en (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:16:25561) at async ea.responseCache.get.routeKind (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:1028) at async r9.renderToResponseWithComponentsImpl (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:508) at async r9.renderPageComponent (/var/task/node_modules/next/dist/compiled/next-server/server.runtime.prod.js:17:5102) { severity: 'ERROR', code: '23505', detail: 'Key (email)=(contato@drtrafego.com) already exists.', hint: undefined, position: undefined, internalPosition: undefined, internalQuery: undefined, where: undefined, schema: 'public', table: 'leads', column: undefined, dataType: undefined, constraint: 'leads_email_key', file: 'nbtinsert.c', line: '667', routine: '_bt_check_unique', sourceError: undefined }
+Nov 24 15:03:17.07
+GET
+304
+drtrafego-geral.vercel.app
+/
