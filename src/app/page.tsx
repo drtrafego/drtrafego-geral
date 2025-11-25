@@ -45,9 +45,51 @@ export default function Home() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const validateForm = (currentEmail: string, currentPhone: string) => {
+    const emailRegex = /\S+@\S+\.\S+/;
+    const isEmailValid = emailRegex.test(currentEmail);
+    
+    const phoneDigits = currentPhone.replace(/\D/g, '');
+    const isPhoneValid = phoneDigits.length >= 10;
+
+    setIsFormValid(isEmailValid && isPhoneValid);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    validateForm(newEmail, phone);
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let input = e.target.value.replace(/\D/g, '');
+    if (input.length > 11) {
+      input = input.substring(0, 11);
+    }
+    
+    let formattedPhone = '';
+    if (input.length > 0) {
+      formattedPhone = '(' + input.substring(0, 2);
+    }
+    if (input.length >= 3) {
+      formattedPhone += ') ' + input.substring(2, 7);
+    }
+    if (input.length >= 8) {
+      formattedPhone += '-' + input.substring(7, 11);
+    }
+    
+    setPhone(formattedPhone);
+    validateForm(email, formattedPhone);
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    if (!isFormValid) return;
+    
+    setIsLoading(true);
     console.log('Formulário enviado. Enviando dados...');
 
     fetch('/api/contact', {
@@ -63,6 +105,7 @@ export default function Home() {
         console.log('Resposta OK. Redirecionando para /obrigado...');
         window.location.href = '/obrigado';
       } else {
+        setIsLoading(false);
         // Em caso de erro, loga o erro mas não impede o fluxo
         response.json().then(errorData => {
           console.error('Falha na API. Status:', response.status, 'Erro:', errorData);
@@ -73,6 +116,7 @@ export default function Home() {
       }
     })
     .catch(error => {
+      setIsLoading(false);
       console.error('Erro de rede ou exceção no fetch:', error);
     });
   };
@@ -90,18 +134,18 @@ export default function Home() {
         <section className="w-full pt-32 pb-16 md:pt-40 md:pb-20 relative">
             <div className="container px-4 md:px-6">
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 leading-normal shadow-[0_0_40px_rgba(156,39,176,0.4)] text-left">
+                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 leading-normal shadow-[0_0_40px_rgba(156,39,176,0.4)] text-center md:text-left">
                         Aumente seu faturamento, atraia os clientes certos e impulsione suas vendas com presença digital estratégica.
                     </h1>
-                    <p className="mt-8 text-lg md:text-xl text-gray-300 max-w-3xl text-left">
+                    <p className="mt-8 text-lg md:text-xl text-gray-300 max-w-3xl text-center md:text-left">
                         Quando sua empresa aparece para quem realmente procura o que você faz, crescer deixa de ser sorte — e vira previsibilidade.
                     </p>
-                    <div className="mt-12">
-                        <Button asChild size="lg" className="bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-14 px-10 text-lg">
+                    <div className="mt-12 flex justify-center md:justify-start">
+                        <Button asChild size="lg" className="bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-auto min-h-14 py-4 px-6 md:px-10 text-lg whitespace-normal text-center">
                             <Link href="#contato">Quero aumentar meu faturamento</Link>
                         </Button>
                     </div>
-                    <p className="mt-8 text-sm text-gray-400">⭐ +50 Clientes Atendidos e Satisfeitos</p>
+                    <p className="mt-8 text-sm text-gray-400 text-center md:text-left">⭐ +50 Clientes Atendidos e Satisfeitos</p>
                 </div>
             </div>
         </section>
@@ -369,23 +413,30 @@ export default function Home() {
                     <p className="text-lg text-gray-300 mt-4">Preencha o formulário e nossa equipe entrará em contato para agendar uma conversa sem compromisso.</p>
                 </div>
                 <GlassCard className="p-8 md:p-12">
-                    <form className="space-y-6">
-                        <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Nome</label>
-                            <Input id="name" name="name" type="text" placeholder="Seu nome completo" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={name} onChange={(e) => setName(e.target.value)} />
-                        </div>
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                            <Input id="email" name="email" type="email" placeholder="seu.email@exemplo.com" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        </div>
-                        <div>
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">Telefone / WhatsApp</label>
-                            <Input id="phone" name="phone" type="tel" placeholder="(XX) XXXXX-XXXX" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                        </div>
-                        <Button type="button" onClick={handleSubmit} size="lg" className="w-full bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-14 text-lg">
-                            Quero aumentar meu faturamento
-                        </Button>
-                    </form>
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                         <div>
+                             <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Nome</label>
+                             <Input id="name" name="name" type="text" placeholder="Seu nome completo" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={name} onChange={(e) => setName(e.target.value)} />
+                         </div>
+                         <div>
+                             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                             <Input id="email" name="email" type="email" placeholder="seu.melhor.email@exemplo.com" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={email} onChange={handleEmailChange} />
+                         </div>
+                         <div>
+                             <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">Telefone / WhatsApp</label>
+                             <Input id="phone" name="phone" type="tel" placeholder="(XX) XXXXX-XXXX" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={phone} onChange={handlePhoneChange} />
+                         </div>
+                         <Button type="submit" size="lg" className="w-full bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-auto min-h-14 py-4 text-lg whitespace-normal disabled:bg-gray-500 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={!isFormValid || isLoading}>
+                             {isLoading ? (
+                                 <div className="flex items-center justify-center">
+                                     <RotateCw className="w-6 h-6 animate-spin mr-2" />
+                                     Enviando...
+                                 </div>
+                             ) : (
+                                 "Quero aumentar meu faturamento"
+                             )}
+                         </Button>
+                     </form>
                 </GlassCard>
             </div>
         </section>
