@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className={inter.className}>
+    <html lang="pt-BR" className="dark">
+      <body className={`${inter.className} bg-[#0A091A] text-white`}>
         {/* Google Tag Manager - Carregamento Otimizado */}
         <Script
           id="gtm-script"
