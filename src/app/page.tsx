@@ -87,13 +87,13 @@ export default function Home() {
       
       <main className="relative z-10 flex flex-col min-h-screen bg-[#0A091A]">
         {/* Hero Section */}
-        <section className="w-full pt-32 pb-16 md:pt-40 md:pb-20 text-center relative">
+        <section className="w-full pt-32 pb-16 md:pt-40 md:pb-20 relative">
             <div className="container px-4 md:px-6">
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 leading-normal shadow-[0_0_40px_rgba(156,39,176,0.4)]">
+                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 leading-normal shadow-[0_0_40px_rgba(156,39,176,0.4)] text-left">
                         Aumente seu faturamento, atraia os clientes certos e impulsione suas vendas com presença digital estratégica.
                     </h1>
-                    <p className="mt-8 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                    <p className="mt-8 text-lg md:text-xl text-gray-300 max-w-3xl text-left">
                         Quando sua empresa aparece para quem realmente procura o que você faz, crescer deixa de ser sorte — e vira previsibilidade.
                     </p>
                     <div className="mt-12">
