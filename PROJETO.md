@@ -120,3 +120,27 @@ Após o envio bem-sucedido do formulário, o usuário é redirecionado para a p�
 -   **Conexão com GitHub:** O projeto está conectado a um repositório no GitHub, e o deploy é acionado automaticamente a cada `push` na branch `main`.
 -   **Variáveis de Ambiente:** A variável `DATABASE_URL` foi configurada diretamente no painel de configurações do projeto na Vercel para garantir a conexão segura com o banco de dados em produção.
 -   **Observação Importante:** Durante o desenvolvimento, foi identificado que as queries SQL no ambiente Vercel exigem a qualificação explícita do schema (`public."Leads"`). Isso foi corrigido no código da API para garantir a comunicação com o banco de dados.
+
+---
+
+## 7. Histórico de Alterações (Changelog)
+
+### [1.1.0] - 2025-11-25
+
+### Adicionado
+
+- **Configuração de SEO e GEO:** Implementada uma base sólida de SEO (Search Engine Optimization) e GEO (Geolocalização) para melhorar a visibilidade do site em buscadores e ferramentas de IA.
+  - Criação do arquivo `src/app/robots.ts` para permitir a indexação por bots (Googlebot, GPTBot, etc.).
+  - Criação do arquivo `src/app/sitemap.ts` para mapear a estrutura do site e garantir que todas as páginas sejam encontradas.
+  - Injeção de **JSON-LD Schema** (`ProfessionalService`) no `layout.tsx` com dados estruturados sobre o negócio, incluindo área de atendimento nacional (Brasil) e um endereço de referência em São Paulo para fortalecimento de autoridade.
+
+### Modificado
+
+- **Domínio Principal:** Todo o site foi atualizado para usar o domínio `https://www.drtrafego.com` como URL principal.
+  - URLs canônicas, OpenGraph e links no sitemap foram ajustados.
+- **Metadados de SEO:** O arquivo `src/app/layout.tsx` foi enriquecido com metadados essenciais (título, descrição e palavras-chave) focados em "tráfego pago" e "gestão de tráfego".
+- **Conteúdo GEO:** Adicionada a informação "Atendimento em todo o Brasil" no rodapé para reforçar a área de serviço.
+
+### Corrigido
+
+- **Inconsistência do Dark Mode:** Corrigido um problema onde o layout aparecia com tema claro em alguns dispositivos na Vercel. O modo escuro foi forçado globalmente através da configuração do Tailwind CSS (`darkMode: 'class'`) e da aplicação da classe `dark` no HTML.
