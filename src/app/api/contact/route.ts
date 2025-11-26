@@ -8,16 +8,27 @@ const sql = neon(process.env.DATABASE_URL!);
 // Função para enviar notificação por email
 async function sendEmailNotification(lead: any) {
   try {
+    console.log('--- INICIANDO DIAGNÓSTICO DE EMAIL ---');
     const host = process.env.EMAIL_HOST;
-    const port = process.env.EMAIL_PORT ? parseInt(process.env.EMAIL_PORT) : 587;
+    const portEnv = process.env.EMAIL_PORT;
     const user = process.env.EMAIL_USER;
     const pass = process.env.EMAIL_PASS;
     const to = process.env.EMAIL_TO;
 
-    if (!host || !user || !pass || !to) {
-      console.error('Configurações de email incompletas. Verifique as variáveis de ambiente.');
+    // Log de verificação detalhado
+    console.log(`[DIAGNÓSTICO] EMAIL_HOST: ${host ? 'OK' : 'FALHOU'}`);
+    console.log(`[DIAGNÓSTICO] EMAIL_PORT: ${portEnv ? 'OK' : 'FALHOU'}`);
+    console.log(`[DIAGNÓSTICO] EMAIL_USER: ${user ? 'OK' : 'FALHOU'}`);
+    console.log(`[DIAGNÓSTICO] EMAIL_PASS: ${pass ? 'OK' : 'FALHOU'}`);
+    console.log(`[DIAGNÓSTICO] EMAIL_TO: ${to ? 'OK' : 'FALHOU'}`);
+
+    if (!host || !portEnv || !user || !pass || !to) {
+      console.error('[DIAGNÓSTICO] FINALIZANDO: Uma ou mais variáveis de ambiente de email não foram encontradas.');
+      console.log('--- FIM DIAGNÓSTICO DE EMAIL ---');
       return;
     }
+    
+    const port = parseInt(portEnv);
 
     const transporter = nodemailer.createTransport({
       host,
