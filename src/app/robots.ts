@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://construaseusucesso.com.br/sitemap.xml',
+    sitemap: 'https://www.drtrafego.com/sitemap.xml',
   };
 }

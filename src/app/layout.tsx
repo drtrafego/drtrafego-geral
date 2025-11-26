@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   publisher: "Construa Seu Sucesso",
   robots: "index, follow",
   alternates: {
-    canonical: "https://construaseusucesso.com.br",
+    canonical: "https://www.drtrafego.com",
   },
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://construaseusucesso.com.br",
+    url: "https://www.drtrafego.com",
     title: "Construa Seu Sucesso | Tráfego Pago e Estratégia",
     description: "Transforme seu negócio com tráfego pago estratégico e previsível.",
     siteName: "Construa Seu Sucesso",
@@ -33,9 +33,9 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Construa Seu Sucesso",
-  "image": "https://construaseusucesso.com.br/og-image.jpg",
+  "image": "https://www.drtrafego.com/og-image.jpg",
   "description": "Especialistas em Tráfego Pago e Estratégia Digital. Aumente seu faturamento com anúncios no Google e Instagram.",
-  "url": "https://construaseusucesso.com.br",
+  "url": "https://www.drtrafego.com",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Av. Paulista, 1000",
