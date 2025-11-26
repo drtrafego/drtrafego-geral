@@ -9,33 +9,33 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "drtrafego | Gestão de Tráfego Pago e Estratégia Digital",
+  title: "Casal do Tráfego | Gestão de Tráfego Pago e Estratégia Digital",
   description: "Especialistas em Tráfego Pago (Google Ads, Meta Ads) e Estratégia Digital. Aumente seu faturamento e atraia clientes qualificados. Atendimento em todo o Brasil.",
   keywords: ["tráfego pago", "gestor de tráfego", "tráfego pago instagram", "gestor de tráfego pago", "gestão de tráfego", "marketing digital", "google ads", "facebook ads", "estratégia digital"],
-  authors: [{ name: "drtrafego" }],
-  creator: "drtrafego",
-  publisher: "drtrafego",
+  authors: [{ name: "Casal do Tráfego" }],
+  creator: "Casal do Tráfego",
+  publisher: "Casal do Tráfego",
   robots: "index, follow",
   alternates: {
-    canonical: "https://www.drtrafego.com",
+    canonical: "https://www.casaldotrafego.com",
   },
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://www.drtrafego.com",
-    title: "drtrafego | Tráfego Pago e Estratégia",
+    url: "https://www.casaldotrafego.com",
+    title: "Casal do Tráfego | Tráfego Pago e Estratégia",
     description: "Transforme seu negócio com tráfego pago estratégico e previsível.",
-    siteName: "drtrafego",
+    siteName: "Casal do Tráfego",
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "drtrafego",
-  "image": "https://www.drtrafego.com/og-image.jpg",
+  "name": "Casal do Tráfego",
+  "image": "https://www.casaldotrafego.com/og-image.jpg",
   "description": "Especialistas em Tráfego Pago e Estratégia Digital. Aumente seu faturamento com anúncios no Google e Instagram.",
-  "url": "https://www.drtrafego.com",
+  "url": "https://www.casaldotrafego.com",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Av. Paulista, 1000",

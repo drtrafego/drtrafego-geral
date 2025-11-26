@@ -154,7 +154,7 @@ Após o envio bem-sucedido do formulário, o usuário é redirecionado para a p�
 
 ### Modificado
 
-- **Domínio Principal:** Todo o site foi atualizado para usar o domínio `https://www.drtrafego.com` como URL principal.
+- **Domínio Principal:** Todo o site foi atualizado para usar o domínio `https://www.casaldotrafego.com` como URL principal.
   - URLs canônicas, OpenGraph e links no sitemap foram ajustados.
 - **Metadados de SEO:** O arquivo `src/app/layout.tsx` foi enriquecido com metadados essenciais (título, descrição e palavras-chave) focados em "tráfego pago" e "gestão de tráfego".
 - **Conteúdo GEO:** Adicionada a informação "Atendimento em todo o Brasil" no rodapé para reforçar a área de serviço.
