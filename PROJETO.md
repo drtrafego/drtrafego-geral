@@ -78,6 +78,14 @@ A estrutura do projeto segue o padrão do Next.js App Router.
       ```
       DATABASE_URL="postgres://user:password@host/dbname"
       ```
+    - Configure as credenciais de e-mail (SMTP) para notificações:
+      ```
+      EMAIL_HOST="smtp.gmail.com"
+      EMAIL_PORT="587"
+      EMAIL_USER="seu-email@gmail.com"
+      EMAIL_PASS="sua-senha-de-app"
+      EMAIL_TO="email-que-recebera-notificacao@exemplo.com"
+      ```
 4.  **Inicie o servidor de desenvolvimento:**
     ```bash
     npm run dev
@@ -124,6 +132,16 @@ Após o envio bem-sucedido do formulário, o usuário é redirecionado para a p�
 ---
 
 ## 7. Histórico de Alterações (Changelog)
+
+### [1.2.0] - 2025-11-25
+
+### Adicionado
+
+- **Notificações por E-mail:** Implementado sistema de envio automático de e-mail sempre que um novo lead é cadastrado.
+  - Utiliza `nodemailer` para envio via SMTP.
+  - Configurado para rodar em segundo plano (background) para não atrasar a resposta ao usuário.
+  - Requer configuração das variáveis de ambiente `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASS` e `EMAIL_TO`.
+- **Favicon Personalizado:** Atualizado o ícone do site (`favicon`) para o novo logo (foguete) da marca Dr. Tráfego.
 
 ### [1.1.0] - 2025-11-25
 

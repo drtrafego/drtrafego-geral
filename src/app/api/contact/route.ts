@@ -1,8 +1,80 @@
 import { neon } from '@neondatabase/serverless';
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
+import nodemailer from 'nodemailer';
 
 const sql = neon(process.env.DATABASE_URL!);
+
+// Função para enviar notificação por email
+async function sendEmailNotification(lead: any) {
+  try {
+    const host = process.env.EMAIL_HOST;
+    const port = process.env.EMAIL_PORT ? parseInt(process.env.EMAIL_PORT) : 587;
+    const user = process.env.EMAIL_USER;
+    const pass = process.env.EMAIL_PASS;
+    const to = process.env.EMAIL_TO;
+
+    if (!host || !user || !pass || !to) {
+      console.error('Configurações de email incompletas. Verifique as variáveis de ambiente.');
+      return;
+    }
+
+    const transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure: port === 465, // true para 465, false para outras portas
+      auth: {
+        user,
+        pass,
+      },
+    });
+
+    const mailOptions = {
+      from: `"Dr. Tráfego Lead" <${user}>`,
+      to,
+      subject: `Novo Lead Cadastrado: ${lead.name}`,
+      text: `
+        Novo lead capturado no site!
+        
+        Nome: ${lead.name}
+        Email: ${lead.email}
+        Telefone: ${lead.phone}
+        Data: ${new Date().toLocaleString('pt-BR')}
+      `,
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #333;">
+          <h2 style="color: #0066cc;">Novo Lead Capturado! 🚀</h2>
+          <p>Um novo cliente em potencial acabou de se cadastrar no site.</p>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Nome:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.name}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Email:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.email}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Telefone:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.phone}</td>
+            </tr>
+             <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Data:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${new Date().toLocaleString('pt-BR')}</td>
+            </tr>
+          </table>
+          <p style="margin-top: 20px; font-size: 12px; color: #666;">Este é um email automático enviado pelo sistema do site Dr. Tráfego.</p>
+        </div>
+      `,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email de notificação enviado:', info.messageId);
+
+  } catch (error) {
+    console.error('Erro ao enviar email de notificação:', error);
+  }
+}
 
 // Função para escrever o cabeçalho
 async function writeHeader(sheets: any, spreadsheetId: string) {
@@ -131,7 +203,14 @@ export async function POST(request: NextRequest) {
         created_at: new Date().toISOString()
     });
 
-    // 3. Retorna sucesso IMEDIATAMENTE
+    // 3. Dispara o envio de email de notificação (sem await)
+    void sendEmailNotification({
+        name,
+        email,
+        phone
+    });
+
+    // 4. Retorna sucesso IMEDIATAMENTE
     console.log('Resposta enviada ao cliente instantaneamente.');
     return NextResponse.json({ message: 'Processamento iniciado.' }, { status: 200 });
 
