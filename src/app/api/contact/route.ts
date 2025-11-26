@@ -200,30 +200,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Nome, email e telefone são obrigatórios.' }, { status: 400 });
     }
 
-    // 1. Dispara o salvamento no Neon (sem await)
-    // Usamos 'void' para indicar explicitamente que não estamos esperando a Promise
-    void saveToNeon(name, email, phone);
+    // Cria um objeto unificado para o lead
+    const lead = {
+      name,
+      email,
+      phone,
+      created_at: new Date().toISOString(),
+    };
 
-    // 2. Dispara o salvamento no Google Sheets (sem await)
-    // Passamos os dados brutos, pois não temos o ID do banco ainda
-    void appendToSheet({
-        id: 'web-' + Date.now(), // ID temporário para controle
-        name,
-        email,
-        phone,
-        created_at: new Date().toISOString()
-    });
+    // Executa as tarefas em paralelo e aguarda todas terminarem
+    await Promise.all([
+      saveToNeon(lead.name, lead.email, lead.phone),
+      appendToSheet(lead),
+      sendEmailNotification(lead)
+    ]);
 
-    // 3. Dispara o envio de email de notificação (sem await)
-    void sendEmailNotification({
-        name,
-        email,
-        phone
-    });
-
-    // 4. Retorna sucesso IMEDIATAMENTE
-    console.log('Resposta enviada ao cliente instantaneamente.');
-    return NextResponse.json({ message: 'Processamento iniciado.' }, { status: 200 });
+    // Retorna sucesso após a conclusão das tarefas
+    console.log('Todas as tarefas foram concluídas. Enviando resposta ao cliente.');
+    return NextResponse.json({ message: 'Lead cadastrado com sucesso!' }, { status: 200 });
 
   } catch (error) {
     console.error('Erro ao processar a requisição:', error);
