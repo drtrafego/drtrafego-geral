@@ -66,7 +66,7 @@ async function sendEmailNotification(lead: any) {
               <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.email}</td>
             </tr>
             <tr>
-              <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Telefone:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>WhatsApp:</strong></td>
               <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.phone}</td>
             </tr>
              <tr>

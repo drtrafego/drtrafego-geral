@@ -423,7 +423,7 @@ export default function Home() {
                              <Input id="email" name="email" type="email" placeholder="seu.melhor.email@exemplo.com" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={email} onChange={handleEmailChange} />
                          </div>
                          <div>
-                             <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">Telefone / WhatsApp</label>
+                             <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">WhatsApp</label>
                              <Input id="phone" name="phone" type="tel" placeholder="(XX) XXXXX-XXXX" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={phone} onChange={handlePhoneChange} />
                          </div>
                          <Button type="submit" size="lg" className="w-full bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-auto min-h-14 py-4 text-lg whitespace-normal disabled:bg-gray-500 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={!isFormValid || isLoading}>
