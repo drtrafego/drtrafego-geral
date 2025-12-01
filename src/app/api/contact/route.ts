@@ -185,8 +185,8 @@ async function saveToNeon(lead: any) {
         console.log('Lead salvo no Neon:', savedLead);
         return savedLead;
     } catch (error) {
-        console.error('Erro ao salvar no Neon:', error);
-        throw new Error('Falha ao salvar no banco de dados.');
+        console.error('Erro detalhado ao salvar no Neon:', error);
+        throw error;
     }
 }
 
@@ -208,7 +208,6 @@ export async function POST(request: NextRequest) {
     };
 
     // Primeiro, salva no banco de dados para obter o ID retornado.
-    // Primeiro, salva no banco de dados para obter o ID e os valores canonicos.
     const savedLead = await saveToNeon(initialLead);
 
     // Em seguida, executa as tarefas restantes em paralelo com os dados completos do lead.
@@ -221,8 +220,11 @@ export async function POST(request: NextRequest) {
     console.log('Todas as tarefas foram concluídas. Enviando resposta ao cliente.');
     return NextResponse.json({ message: 'Lead cadastrado com sucesso!' }, { status: 200 });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Erro ao processar a requisição:', error);
-    return NextResponse.json({ message: 'Erro interno do servidor.' }, { status: 500 });
+    return NextResponse.json({ 
+        message: 'Erro interno do servidor.',
+        error: error.message || String(error)
+    }, { status: 500 });
   }
 }
