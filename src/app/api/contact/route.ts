@@ -43,11 +43,11 @@ async function sendEmailNotification(lead: any) {
     const mailOptions = {
       from: `"Dr. Tráfego Lead" <${user}>`,
       to,
-      subject: `Novo Lead Cadastrado: ${lead.Name}`,
+      subject: `Novo Lead Cadastrado: ${lead.name}`,
       text: `
         Novo lead capturado no site!
         
-        Nome: ${lead.Name}
+        Nome: ${lead.name}
         Email: ${lead.email}
         Telefone: ${lead.whatsapp}
         Data: ${new Date().toLocaleString('pt-BR')}
@@ -59,7 +59,7 @@ async function sendEmailNotification(lead: any) {
           <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
             <tr>
               <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Nome:</strong></td>
-              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.Name}</td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.name}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Email:</strong></td>
@@ -89,7 +89,7 @@ async function sendEmailNotification(lead: any) {
 
 // Função para escrever o cabeçalho
 async function writeHeader(sheets: any, spreadsheetId: string) {
-    const header = [['id', 'Name', 'email', 'whatsapp', 'created_at']];
+    const header = [['id', 'name', 'email', 'whatsapp', 'created_at']];
     await sheets.spreadsheets.values.update({
         spreadsheetId,
         range: 'A1',
@@ -147,7 +147,7 @@ async function appendToSheet(lead: any) {
     const values = [
       [
         lead.id,
-        lead.Name,
+        lead.name,
         lead.email,
         lead.whatsapp,
         lead.created_at,
@@ -173,10 +173,10 @@ async function appendToSheet(lead: any) {
 async function saveToNeon(lead: any) {
     try {
         const result = await sql`
-            INSERT INTO public.leads ("Name", email, whatsapp, created_at)
+            INSERT INTO public.leads (name, email, whatsapp, created_at)
             VALUES (${lead.name}, ${lead.email}, ${lead.phone}, ${lead.created_at})
             ON CONFLICT (email) DO UPDATE SET
-                "Name" = EXCLUDED."Name",
+                name = EXCLUDED.name,
                 whatsapp = EXCLUDED.whatsapp,
                 updated_at = NOW()
             RETURNING *;
