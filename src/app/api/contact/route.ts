@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 import nodemailer from 'nodemailer';
 
-const sql = neon(process.env.DATABASE_URL!);
+// Removendo inicialização global para evitar problemas de cache em serverless
+// const sql = neon(process.env.DATABASE_URL!);
 
 // Função para enviar notificação por email
 async function sendEmailNotification(lead: any) {
@@ -172,11 +173,14 @@ async function appendToSheet(lead: any) {
 // Função assíncrona para salvar no banco (para rodar em background)
 async function saveToNeon(lead: any) {
     try {
-        console.log('Tentando salvar no Neon:', {
+        console.log('Tentando salvar no Neon (Nova Instância):', {
             name: lead.name,
             email: lead.email,
             phone: lead.phone
         });
+        
+        // Inicializa o cliente Neon DENTRO da função para garantir conexão fresca
+        const sql = neon(process.env.DATABASE_URL!);
 
         // 1. Buscar organization_id e column_id padrão (primeira coluna do quadro)
         // Isso é necessário porque organization_id e column_id são NOT NULL
