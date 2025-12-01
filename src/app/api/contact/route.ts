@@ -172,17 +172,52 @@ async function appendToSheet(lead: any) {
 // Função assíncrona para salvar no banco (para rodar em background)
 async function saveToNeon(lead: any) {
     try {
+        console.log('Tentando salvar no Neon:', {
+            name: lead.name,
+            email: lead.email,
+            phone: lead.phone
+        });
+
+        // 1. Buscar organization_id e column_id padrão (primeira coluna do quadro)
+        // Isso é necessário porque organization_id e column_id são NOT NULL
+        const defaultColumn = await sql`
+            SELECT id, organization_id 
+            FROM columns 
+            ORDER BY "order" ASC 
+            LIMIT 1
+        `;
+
+        if (!defaultColumn || defaultColumn.length === 0) {
+            throw new Error('Não foi possível encontrar uma coluna padrão na tabela "columns". Verifique se a tabela existe e tem dados.');
+        }
+
+        const { id: columnId, organization_id: organizationId } = defaultColumn[0];
+        console.log(`Usando column_id: ${columnId} e organization_id: ${organizationId}`);
+
+        // 2. Inserir Lead com os campos obrigatórios
+        // Definimos status como 'Novo' e usamos os IDs recuperados
         const result = await sql`
-            INSERT INTO public.leads (name, email, whatsapp, created_at)
-            VALUES (${lead.name}, ${lead.email}, ${lead.phone}, ${lead.created_at})
+            INSERT INTO public.leads (
+                name, email, whatsapp, created_at, 
+                status, column_id, organization_id
+            )
+            VALUES (
+                ${lead.name}, ${lead.email}, ${lead.phone}, ${lead.created_at}, 
+                'Novo', ${columnId}, ${organizationId}
+            )
             ON CONFLICT (email) DO UPDATE SET
                 name = EXCLUDED.name,
                 whatsapp = EXCLUDED.whatsapp,
                 updated_at = NOW()
             RETURNING *;
         `;
+        
+        if (!result || result.length === 0) {
+            throw new Error('O comando INSERT rodou mas não retornou nenhum dado. Verifique permissões RLS ou triggers.');
+        }
+
         const savedLead = result[0];
-        console.log('Lead salvo no Neon:', savedLead);
+        console.log('SUCESSO NEON! Lead salvo/atualizado:', savedLead);
         return savedLead;
     } catch (error) {
         console.error('Erro detalhado ao salvar no Neon:', error);
@@ -208,6 +243,7 @@ const withTimeout = <T>(promise: Promise<T>, ms: number): Promise<T> => {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('--- INICIANDO PROCESSAMENTO DE LEAD (Versão: Fix IDs Automáticos) ---');
     const { name, email, phone } = await request.json();
 
     if (!name || !email || !phone) {
