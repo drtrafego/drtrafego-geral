@@ -208,6 +208,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Primeiro, salva no banco de dados para obter o ID retornado.
+    // Primeiro, salva no banco de dados para obter o ID e os valores canonicos.
     const savedLead = await saveToNeon(initialLead);
 
     // Em seguida, executa as tarefas restantes em paralelo com os dados completos do lead.
