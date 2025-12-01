@@ -43,13 +43,13 @@ async function sendEmailNotification(lead: any) {
     const mailOptions = {
       from: `"Dr. Tráfego Lead" <${user}>`,
       to,
-      subject: `Novo Lead Cadastrado: ${lead.name}`,
+      subject: `Novo Lead Cadastrado: ${lead.Name}`,
       text: `
         Novo lead capturado no site!
         
-        Nome: ${lead.name}
+        Nome: ${lead.Name}
         Email: ${lead.email}
-        Telefone: ${lead.phone}
+        Telefone: ${lead.whatsapp}
         Data: ${new Date().toLocaleString('pt-BR')}
       `,
       html: `
@@ -59,7 +59,7 @@ async function sendEmailNotification(lead: any) {
           <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
             <tr>
               <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Nome:</strong></td>
-              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.name}</td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.Name}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Email:</strong></td>
@@ -67,7 +67,7 @@ async function sendEmailNotification(lead: any) {
             </tr>
             <tr>
               <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>WhatsApp:</strong></td>
-              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.phone}</td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.whatsapp}</td>
             </tr>
              <tr>
               <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Data:</strong></td>
@@ -89,7 +89,7 @@ async function sendEmailNotification(lead: any) {
 
 // Função para escrever o cabeçalho
 async function writeHeader(sheets: any, spreadsheetId: string) {
-    const header = [['id', 'name', 'email', 'phone', 'created_at']];
+    const header = [['id', 'Name', 'email', 'whatsapp', 'created_at']];
     await sheets.spreadsheets.values.update({
         spreadsheetId,
         range: 'A1',
@@ -146,11 +146,11 @@ async function appendToSheet(lead: any) {
     // 3. Prepara os dados na ordem correta
     const values = [
       [
-        lead.id || 'pendente', // ID pode não estar disponível imediatamente
-        lead.name,
+        lead.id,
+        lead.Name,
         lead.email,
-        lead.phone,
-        lead.created_at || new Date().toISOString(),
+        lead.whatsapp,
+        lead.created_at,
       ],
     ];
 
@@ -170,24 +170,23 @@ async function appendToSheet(lead: any) {
 }
 
 // Função assíncrona para salvar no banco (para rodar em background)
-async function saveToNeon(name: string, email: string, phone: string) {
+async function saveToNeon(lead: any) {
     try {
         const result = await sql`
-            INSERT INTO public."Leads" (name, email, phone)
-            VALUES (${name}, ${email}, ${phone})
+            INSERT INTO public.leads ("Name", email, whatsapp, created_at)
+            VALUES (${lead.name}, ${lead.email}, ${lead.phone}, ${lead.created_at})
             ON CONFLICT (email) DO UPDATE SET
-                name = EXCLUDED.name,
-                phone = EXCLUDED.phone,
+                "Name" = EXCLUDED."Name",
+                whatsapp = EXCLUDED.whatsapp,
                 updated_at = NOW()
             RETURNING *;
         `;
-        console.log('Lead salvo no Neon:', result[0]);
-        // Se quisermos garantir que o ID correto vá para o Sheets, podemos chamar o Sheets AQUI
-        // Mas isso cria dependência. Se a prioridade é salvar nos dois lugares, podemos salvar no Sheets
-        // com ID "pendente" em paralelo, OU chamar aqui para ter o ID correto.
-        // Como o usuário quer VELOCIDADE, vamos deixar independente.
+        const savedLead = result[0];
+        console.log('Lead salvo no Neon:', savedLead);
+        return savedLead;
     } catch (error) {
         console.error('Erro ao salvar no Neon:', error);
+        throw new Error('Falha ao salvar no banco de dados.');
     }
 }
 
@@ -200,19 +199,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Nome, email e telefone são obrigatórios.' }, { status: 400 });
     }
 
-    // Cria um objeto unificado para o lead
-    const lead = {
+    // Cria um objeto unificado para o lead inicial
+    const initialLead = {
       name,
       email,
       phone,
       created_at: new Date().toISOString(),
     };
 
-    // Executa as tarefas em paralelo e aguarda todas terminarem
+    // Primeiro, salva no banco de dados para obter o ID retornado.
+    const savedLead = await saveToNeon(initialLead);
+
+    // Em seguida, executa as tarefas restantes em paralelo com os dados completos do lead.
     await Promise.all([
-      saveToNeon(lead.name, lead.email, lead.phone),
-      appendToSheet(lead),
-      sendEmailNotification(lead)
+      appendToSheet(savedLead),
+      sendEmailNotification(savedLead)
     ]);
 
     // Retorna sucesso após a conclusão das tarefas
