@@ -226,6 +226,7 @@ async function saveToNeon(lead: any) {
 
         // 2. Inserir Lead com os campos obrigatórios
         // Definimos status como 'Novo' e usamos os IDs recuperados
+        // Removido ON CONFLICT pois a tabela não tem constraint UNIQUE no email
         const result = await sql`
             INSERT INTO public.leads (
                 name, email, whatsapp, created_at, 
@@ -235,9 +236,6 @@ async function saveToNeon(lead: any) {
                 ${lead.name}, ${lead.email}, ${lead.phone}, ${lead.created_at}, 
                 'Novo', ${columnId}, ${organizationId}
             )
-            ON CONFLICT (email) DO UPDATE SET
-                name = EXCLUDED.name,
-                whatsapp = EXCLUDED.whatsapp
             RETURNING *;
         `;
         
