@@ -207,10 +207,23 @@ export async function POST(request: NextRequest) {
       created_at: new Date().toISOString(),
     };
 
-    // Primeiro, salva no banco de dados para obter o ID retornado.
-    const savedLead = await saveToNeon(initialLead);
+    // Primeiro, tenta salvar no banco de dados
+    let savedLead;
+    try {
+        savedLead = await saveToNeon(initialLead);
+    } catch (dbError) {
+        console.error('⚠️ FALHA NO NEON (Ignorando para não perder o lead):', dbError);
+        // Cria um objeto de backup para garantir que o lead vá para o Email e Sheets
+        savedLead = {
+            id: 'backup_' + Date.now(),
+            name: initialLead.name,
+            email: initialLead.email,
+            whatsapp: initialLead.phone,
+            created_at: initialLead.created_at
+        };
+    }
 
-    // Em seguida, executa as tarefas restantes em paralelo com os dados completos do lead.
+    // Em seguida, executa as tarefas restantes em paralelo com os dados (do banco ou do backup)
     await Promise.all([
       appendToSheet(savedLead),
       sendEmailNotification(savedLead)
