@@ -191,6 +191,21 @@ async function saveToNeon(lead: any) {
 }
 
 
+// Função auxiliar de timeout
+const withTimeout = <T>(promise: Promise<T>, ms: number): Promise<T> => {
+    let timeoutId: NodeJS.Timeout;
+    const timeoutPromise = new Promise<T>((_, reject) => {
+        timeoutId = setTimeout(() => {
+            reject(new Error(`Operação abortada por timeout após ${ms}ms`));
+        }, ms);
+    });
+
+    return Promise.race([
+        promise.finally(() => clearTimeout(timeoutId)),
+        timeoutPromise
+    ]);
+};
+
 export async function POST(request: NextRequest) {
   try {
     const { name, email, phone } = await request.json();
@@ -207,15 +222,16 @@ export async function POST(request: NextRequest) {
       created_at: new Date().toISOString(),
     };
 
-    // Primeiro, tenta salvar no banco de dados
+    // Primeiro, tenta salvar no banco de dados com TIMEOUT de 2 segundos
     let savedLead;
     try {
-        savedLead = await saveToNeon(initialLead);
+        // Força um timeout de 2s para não travar a função se o banco estiver lento
+        savedLead = await withTimeout(saveToNeon(initialLead), 2000);
     } catch (dbError) {
-        console.error('⚠️ FALHA NO NEON (Ignorando para não perder o lead):', dbError);
+        console.error('⚠️ FALHA OU TIMEOUT NO NEON (Ignorando para salvar no Sheets/Email):', dbError);
         // Cria um objeto de backup para garantir que o lead vá para o Email e Sheets
         savedLead = {
-            id: 'backup_' + Date.now(),
+            id: 'backup_timeout_' + Date.now(),
             name: initialLead.name,
             email: initialLead.email,
             whatsapp: initialLead.phone,
@@ -223,15 +239,23 @@ export async function POST(request: NextRequest) {
         };
     }
 
-    // Em seguida, executa as tarefas restantes em paralelo com os dados (do banco ou do backup)
-    await Promise.all([
+    // Em seguida, executa as tarefas restantes em paralelo
+    // Também protegemos essas chamadas para que uma não trave a outra
+    const results = await Promise.allSettled([
       appendToSheet(savedLead),
       sendEmailNotification(savedLead)
     ]);
+    
+    // Loga o resultado das operações paralelas
+    results.forEach((result, index) => {
+        if (result.status === 'rejected') {
+            console.error(`Erro na tarefa paralela ${index === 0 ? 'Sheets' : 'Email'}:`, result.reason);
+        }
+    });
 
-    // Retorna sucesso após a conclusão das tarefas
-    console.log('Todas as tarefas foram concluídas. Enviando resposta ao cliente.');
-    return NextResponse.json({ message: 'Lead cadastrado com sucesso!' }, { status: 200 });
+    // Retorna sucesso
+    console.log('Processamento finalizado. Enviando resposta 200.');
+    return NextResponse.json({ message: 'Lead processado (com ou sem DB).' }, { status: 200 });
 
   } catch (error: any) {
     console.error('Erro ao processar a requisição:', error);
