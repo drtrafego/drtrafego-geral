@@ -67,7 +67,7 @@ async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: st
     const mailOptions = {
       from: `"Dr. Tráfego Lead" <${user}>`,
       to,
-      subject: `${subjectPrefix}Novo Lead Cadastrado: ${lead.name} (v3)`,
+      subject: `${subjectPrefix}Novo Lead Cadastrado: ${lead.name}`,
       text: `
         ${dbStatusText}
         
@@ -237,8 +237,7 @@ async function saveToNeon(lead: any) {
             )
             ON CONFLICT (email) DO UPDATE SET
                 name = EXCLUDED.name,
-                whatsapp = EXCLUDED.whatsapp,
-                updated_at = NOW()
+                whatsapp = EXCLUDED.whatsapp
             RETURNING *;
         `;
         
