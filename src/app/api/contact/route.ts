@@ -258,11 +258,12 @@ export async function POST(request: NextRequest) {
       created_at: new Date().toISOString(),
     };
 
-    // Primeiro, tenta salvar no banco de dados com TIMEOUT de 2 segundos
+    // Primeiro, tenta salvar no banco de dados com TIMEOUT de 10 segundos (aumentado para evitar falha em cold start)
     let savedLead;
     try {
-        // Força um timeout de 2s para não travar a função se o banco estiver lento
-        savedLead = await withTimeout(saveToNeon(initialLead), 2000);
+        console.log('Iniciando tentativa de salvar no Neon (Timeout: 15s)...');
+        // Força um timeout de 15s para dar tempo de conectar (cold start)
+        savedLead = await withTimeout(saveToNeon(initialLead), 15000);
     } catch (dbError) {
         console.error('⚠️ FALHA OU TIMEOUT NO NEON (Ignorando para salvar no Sheets/Email):', dbError);
         // Cria um objeto de backup para garantir que o lead vá para o Email e Sheets
