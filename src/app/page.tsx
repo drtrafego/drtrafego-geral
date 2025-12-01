@@ -109,8 +109,8 @@ export default function Home() {
         // Em caso de erro, loga o erro mas não impede o fluxo
         response.json().then(errorData => {
           console.error('Falha na API. Status:', response.status, 'Erro:', errorData);
+          alert('Ocorreu um erro ao enviar. Tente novamente.');
         }).catch(() => {
-          // Se o corpo do erro não for JSON, apenas loga o status
           console.error('Falha na API. Status:', response.status);
         });
       }
@@ -118,6 +118,7 @@ export default function Home() {
     .catch(error => {
       setIsLoading(false);
       console.error('Erro de rede ou exceção no fetch:', error);
+      alert('Erro de conexão. Verifique sua internet.');
     });
   };
 

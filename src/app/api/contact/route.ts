@@ -7,7 +7,7 @@ import nodemailer from 'nodemailer';
 // const sql = neon(process.env.DATABASE_URL!);
 
 // Função para enviar notificação por email
-async function sendEmailNotification(lead: any) {
+async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: string, dbMeta?: any) {
   try {
     console.log('--- INICIANDO DIAGNÓSTICO DE EMAIL ---');
     const host = process.env.EMAIL_HOST;
@@ -16,16 +16,10 @@ async function sendEmailNotification(lead: any) {
     const pass = process.env.EMAIL_PASS;
     const to = process.env.EMAIL_TO;
 
-    // Log de verificação detalhado
-    console.log(`[DIAGNÓSTICO] EMAIL_HOST: ${host ? 'OK' : 'FALHOU'}`);
-    console.log(`[DIAGNÓSTICO] EMAIL_PORT: ${portEnv ? 'OK' : 'FALHOU'}`);
-    console.log(`[DIAGNÓSTICO] EMAIL_USER: ${user ? 'OK' : 'FALHOU'}`);
-    console.log(`[DIAGNÓSTICO] EMAIL_PASS: ${pass ? 'OK' : 'FALHOU'}`);
-    console.log(`[DIAGNÓSTICO] EMAIL_TO: ${to ? 'OK' : 'FALHOU'}`);
+    // ... logs de diagnóstico ...
 
     if (!host || !portEnv || !user || !pass || !to) {
-      console.error('[DIAGNÓSTICO] FINALIZANDO: Uma ou mais variáveis de ambiente de email não foram encontradas.');
-      console.log('--- FIM DIAGNÓSTICO DE EMAIL ---');
+        // ...
       return;
     }
     
@@ -41,11 +35,42 @@ async function sendEmailNotification(lead: any) {
       },
     });
 
+    // Prepara aviso de erro do banco, se houver
+    let dbStatusHtml = '<p style="color: green;"><strong>Banco de Dados:</strong> Salvo com sucesso ✅</p>';
+    let dbStatusText = 'Banco de Dados: Salvo com sucesso';
+    let subjectPrefix = '';
+
+    if (dbError) {
+        subjectPrefix = '[ALERTA DB] ';
+        dbStatusHtml = `
+            <div style="background-color: #ffebee; border: 1px solid #ef9a9a; color: #c62828; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                <strong>⚠️ FALHA AO SALVAR NO NEON (BANCO DE DADOS)</strong><br/>
+                O lead foi recebido, mas não pôde ser salvo no banco.<br/>
+                <strong>Erro:</strong> ${dbError}<br/>
+                <strong>URL do Banco (parcial):</strong> ${dbUrlUsed || 'Não identificada'}
+            </div>
+        `;
+        dbStatusText = `⚠️ FALHA AO SALVAR NO BANCO DE DADOS:\nErro: ${dbError}\nURL: ${dbUrlUsed}\n`;
+    } else if (dbMeta) {
+        // Adiciona informações de onde foi salvo para ajudar o usuário a localizar
+        dbStatusHtml += `
+            <div style="background-color: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; padding: 10px; margin-bottom: 15px; border-radius: 4px; font-size: 12px;">
+                <strong>📍 Rastreamento do Banco de Dados:</strong><br/>
+                <strong>Host (Servidor):</strong> ${dbMeta.host}<br/>
+                <strong>Total de Leads na Tabela:</strong> ${dbMeta.count}<br/>
+                <em>Verifique se o endpoint no seu painel Neon confere com o Host acima.</em>
+            </div>
+        `;
+        dbStatusText += `\n[RASTREAMENTO DB]\nHost: ${dbMeta.host}\nTotal Leads: ${dbMeta.count}\n`;
+    }
+
     const mailOptions = {
       from: `"Dr. Tráfego Lead" <${user}>`,
       to,
-      subject: `Novo Lead Cadastrado: ${lead.name}`,
+      subject: `${subjectPrefix}Novo Lead Cadastrado: ${lead.name} (v3)`,
       text: `
+        ${dbStatusText}
+        
         Novo lead capturado no site!
         
         Nome: ${lead.name}
@@ -56,6 +81,7 @@ async function sendEmailNotification(lead: any) {
       html: `
         <div style="font-family: Arial, sans-serif; color: #333;">
           <h2 style="color: #0066cc;">Novo Lead Capturado! 🚀</h2>
+          ${dbStatusHtml}
           <p>Um novo cliente em potencial acabou de se cadastrar no site.</p>
           <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
             <tr>
@@ -220,9 +246,18 @@ async function saveToNeon(lead: any) {
             throw new Error('O comando INSERT rodou mas não retornou nenhum dado. Verifique permissões RLS ou triggers.');
         }
 
+        // 3. Contar quantos leads existem na tabela (para prova de inserção)
+        const countResult = await sql`SELECT count(*) FROM leads`;
+        const totalCount = countResult[0].count;
+
         const savedLead = result[0];
         console.log('SUCESSO NEON! Lead salvo/atualizado:', savedLead);
-        return savedLead;
+        
+        // Extrai o host da URL para rastreamento
+        const dbUrl = process.env.DATABASE_URL || '';
+        const host = dbUrl.split('@')[1]?.split('/')[0] || 'Desconhecido';
+
+        return { ...savedLead, _meta: { host, count: totalCount } };
     } catch (error) {
         console.error('Erro detalhado ao salvar no Neon:', error);
         throw error;
@@ -245,9 +280,11 @@ const withTimeout = <T>(promise: Promise<T>, ms: number): Promise<T> => {
     ]);
 };
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
-    console.log('--- INICIANDO PROCESSAMENTO DE LEAD (Versão: Fix IDs Automáticos) ---');
+    console.log('--- INICIANDO PROCESSAMENTO DE LEAD (Versão: Produção Estável) ---');
     const { name, email, phone } = await request.json();
 
     if (!name || !email || !phone) {
@@ -262,15 +299,26 @@ export async function POST(request: NextRequest) {
       created_at: new Date().toISOString(),
     };
 
-    // Primeiro, tenta salvar no banco de dados com TIMEOUT de 10 segundos (aumentado para evitar falha em cold start)
+    // Primeiro, tenta salvar no banco de dados com TIMEOUT de 15 segundos
     let savedLead;
+    let dbErrorMsg = undefined;
+    let dbUrlMasked = undefined;
+    let dbMeta = undefined;
+
     try {
         console.log('Iniciando tentativa de salvar no Neon (Timeout: 15s)...');
-        // Força um timeout de 15s para dar tempo de conectar (cold start)
         savedLead = await withTimeout(saveToNeon(initialLead), 15000);
-    } catch (dbError) {
-        console.error('⚠️ FALHA OU TIMEOUT NO NEON (Ignorando para salvar no Sheets/Email):', dbError);
-        // Cria um objeto de backup para garantir que o lead vá para o Email e Sheets
+        if (savedLead._meta) {
+            dbMeta = savedLead._meta;
+        }
+    } catch (dbError: any) {
+        console.error('⚠️ FALHA OU TIMEOUT NO NEON:', dbError);
+        
+        dbErrorMsg = dbError.message || String(dbError);
+        const dbUrl = process.env.DATABASE_URL || '';
+        dbUrlMasked = dbUrl.replace(/:[^:]*@/, ':****@');
+
+        // Cria um objeto de backup
         savedLead = {
             id: 'backup_timeout_' + Date.now(),
             name: initialLead.name,
@@ -281,22 +329,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Em seguida, executa as tarefas restantes em paralelo
-    // Também protegemos essas chamadas para que uma não trave a outra
     const results = await Promise.allSettled([
       appendToSheet(savedLead),
-      sendEmailNotification(savedLead)
+      sendEmailNotification(savedLead, dbErrorMsg, dbUrlMasked, dbMeta)
     ]);
     
-    // Loga o resultado das operações paralelas
+    // Loga falhas nas tarefas paralelas
     results.forEach((result, index) => {
         if (result.status === 'rejected') {
-            console.error(`Erro na tarefa paralela ${index === 0 ? 'Sheets' : 'Email'}:`, result.reason);
+             console.error(`Erro na tarefa paralela ${index === 0 ? 'Sheets' : 'Email'}:`, result.reason);
         }
     });
 
     // Retorna sucesso
-    console.log('Processamento finalizado. Enviando resposta 200.');
-    return NextResponse.json({ message: 'Lead processado (com ou sem DB).' }, { status: 200 });
+    return NextResponse.json({ 
+        message: 'Lead processado com sucesso.',
+        lead: savedLead
+    }, { status: 200 });
 
   } catch (error: any) {
     console.error('Erro ao processar a requisição:', error);
