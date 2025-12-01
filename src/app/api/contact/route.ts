@@ -7,7 +7,7 @@ import nodemailer from 'nodemailer';
 // const sql = neon(process.env.DATABASE_URL!);
 
 // Função para enviar notificação por email
-async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: string, dbMeta?: any) {
+async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: string, dbMeta?: any, sheetsError?: string) {
   try {
     console.log('--- INICIANDO DIAGNÓSTICO DE EMAIL ---');
     const host = process.env.EMAIL_HOST;
@@ -36,8 +36,8 @@ async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: st
     });
 
     // Prepara aviso de erro do banco, se houver
-    let dbStatusHtml = '<p style="color: green;"><strong>Banco de Dados:</strong> Salvo com sucesso ✅</p>';
-    let dbStatusText = 'Banco de Dados: Salvo com sucesso';
+    let dbStatusHtml = '<p style="color: green;"><strong>Banco de Dados (Neon):</strong> Salvo com sucesso ✅</p>';
+    let dbStatusText = 'Banco de Dados (Neon): Salvo com sucesso';
     let subjectPrefix = '';
 
     if (dbError) {
@@ -64,12 +64,31 @@ async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: st
         dbStatusText += `\n[RASTREAMENTO DB]\nHost: ${dbMeta.host}\nTotal Leads: ${dbMeta.count}\n`;
     }
 
+    // Prepara aviso de erro do Google Sheets, se houver
+    let sheetsStatusHtml = '<p style="color: green;"><strong>Google Sheets:</strong> Salvo com sucesso ✅</p>';
+    let sheetsStatusText = 'Google Sheets: Salvo com sucesso';
+
+    if (sheetsError) {
+        if (!subjectPrefix) subjectPrefix = '[ALERTA SHEETS] ';
+        else subjectPrefix = '[ALERTA DB+SHEETS] ';
+        
+        sheetsStatusHtml = `
+            <div style="background-color: #fff3e0; border: 1px solid #ffcc80; color: #e65100; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                <strong>⚠️ FALHA AO SALVAR NO GOOGLE SHEETS</strong><br/>
+                O lead não foi salvo na planilha.<br/>
+                <strong>Erro:</strong> ${sheetsError}
+            </div>
+        `;
+        sheetsStatusText = `⚠️ FALHA AO SALVAR NO GOOGLE SHEETS:\nErro: ${sheetsError}\n`;
+    }
+
     const mailOptions = {
       from: `"Dr. Tráfego Lead" <${user}>`,
       to,
       subject: `${subjectPrefix}Novo Lead Cadastrado: ${lead.name}`,
       text: `
         ${dbStatusText}
+        ${sheetsStatusText}
         
         Novo lead capturado no site!
         
@@ -82,6 +101,7 @@ async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: st
         <div style="font-family: Arial, sans-serif; color: #333;">
           <h2 style="color: #0066cc;">Novo Lead Capturado! 🚀</h2>
           ${dbStatusHtml}
+          ${sheetsStatusHtml}
           <p>Um novo cliente em potencial acabou de se cadastrar no site.</p>
           <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
             <tr>
@@ -152,8 +172,7 @@ async function appendToSheet(lead: any) {
     const private_key = process.env.GOOGLE_PRIVATE_KEY;
 
     if (!spreadsheetId || !client_email || !private_key) {
-        console.error('As variáveis de ambiente do Google Sheets não estão configuradas corretamente.');
-        return;
+        throw new Error(`Configuração incompleta: ${!spreadsheetId ? 'GOOGLE_SHEET_ID ' : ''}${!client_email ? 'GOOGLE_CLIENT_EMAIL ' : ''}${!private_key ? 'GOOGLE_PRIVATE_KEY' : ''} faltando.`);
     }
 
     // 1. Autenticação
@@ -191,8 +210,10 @@ async function appendToSheet(lead: any) {
       },
     });
     console.log('Lead salvo com sucesso no Google Sheets.');
-  } catch (error) {
+    return { success: true };
+  } catch (error: any) {
     console.error('Erro ao salvar lead no Google Sheets:', error);
+    throw error; // Propaga o erro para ser capturado no POST
   }
 }
 
@@ -325,19 +346,18 @@ export async function POST(request: NextRequest) {
         };
     }
 
-    // Em seguida, executa as tarefas restantes em paralelo
-    const results = await Promise.allSettled([
-      appendToSheet(savedLead),
-      sendEmailNotification(savedLead, dbErrorMsg, dbUrlMasked, dbMeta)
-    ]);
-    
-    // Loga falhas nas tarefas paralelas
-    results.forEach((result, index) => {
-        if (result.status === 'rejected') {
-             console.error(`Erro na tarefa paralela ${index === 0 ? 'Sheets' : 'Email'}:`, result.reason);
-        }
-    });
+    // Em seguida, tenta salvar no Google Sheets (sequencial para pegar o status para o email)
+    let sheetsErrorMsg = undefined;
+    try {
+        await appendToSheet(savedLead);
+    } catch (error: any) {
+        console.error('Erro capturado no POST ao salvar no Sheets:', error);
+        sheetsErrorMsg = error.message || String(error);
+    }
 
+    // Por fim, envia o email com o status de tudo
+    await sendEmailNotification(savedLead, dbErrorMsg, dbUrlMasked, dbMeta, sheetsErrorMsg);
+    
     // Retorna sucesso
     return NextResponse.json({ 
         message: 'Lead processado com sucesso.',
