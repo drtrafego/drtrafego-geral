@@ -1,3 +1,98 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root { 
+    --card: 0 0% 99%; 
+    --ring: 151 65% 67%; 
+    --input: 0 0% 96%; 
+    --muted: 0 0% 93%; 
+    --accent: 0 0% 93%; 
+    --border: 0 0% 87%; 
+    --radius: 0.5rem; 
+    --chart-1: 151 65% 67%; 
+    --chart-2: 217 91% 60%; 
+    --chart-3: 262 83% 66%; 
+    --chart-4: 45 93% 47%; 
+    --chart-5: 161 94% 30%; 
+    --popover: 0 0% 99%; 
+    --primary: 151 65% 67%; 
+    --sidebar: 0 0% 99%; 
+    --font-mono: monospace; 
+    --font-sans: Outfit, sans-serif; 
+    --secondary: 0 0% 99%; 
+    --background: 0 0% 99%; 
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; 
+    --foreground: 0 0% 9%; 
+    --destructive: 4 81% 44%; 
+    --shadow-blur: 3px; 
+    --shadow-color: 0 0% 0%; 
+    --sidebar-ring: 151 65% 67%; 
+    --shadow-spread: 0px; 
+    --letter-spacing: 0.025em; 
+    --shadow-opacity: 0.17; 
+    --sidebar-accent: 0 0% 93%; 
+    --sidebar-border: 0 0% 87%; 
+    --card-foreground: 0 0% 9%; 
+    --shadow-offset-x: 0px; 
+    --shadow-offset-y: 1px; 
+    --sidebar-primary: 151 65% 67%; 
+    --muted-foreground: 0 0% 12%; 
+    --accent-foreground: 0 0% 12%; 
+    --popover-foreground: 0 0% 32%; 
+    --primary-foreground: 151 13% 14%; 
+    --sidebar-foreground: 0 0% 44%; 
+    --secondary-foreground: 0 0% 9%; 
+    --destructive-foreground: 0 33% 99%; 
+    --sidebar-accent-foreground: 0 0% 12%; 
+    --sidebar-primary-foreground: 151 13% 14%; 
+  } 
+  
+  .dark { 
+    --card: 0 0% 9%; 
+    --ring: 142 71% 58%; 
+    --input: 0 0% 14%; 
+    --muted: 0 0% 12%; 
+    --accent: 0 0% 19%; 
+    --border: 0 0% 16%; 
+    --chart-1: 142 71% 58%; 
+    --chart-2: 217 91% 60%; 
+    --chart-3: 262 83% 66%; 
+    --chart-4: 45 93% 47%; 
+    --chart-5: 175 64% 50%; 
+    --popover: 0 0% 14%; 
+    --primary: 155 100% 19%; 
+    --sidebar: 0 0% 7%; 
+    --secondary: 0 0% 14%; 
+    --background: 0 0% 7%; 
+    --foreground: 215 20% 91%; 
+    --destructive: 4 60% 21%; 
+    --sidebar-ring: 142 71% 58%; 
+    --sidebar-accent: 0 0% 19%; 
+    --sidebar-border: 0 0% 16%; 
+    --card-foreground: 215 20% 91%; 
+    --sidebar-primary: 155 100% 19%; 
+    --muted-foreground: 0 0% 63%; 
+    --accent-foreground: 0 0% 98%; 
+    --popover-foreground: 0 0% 66%; 
+    --primary-foreground: 153 21% 89%; 
+    --sidebar-foreground: 0 0% 54%; 
+    --secondary-foreground: 0 0% 98%; 
+    --destructive-foreground: 7 15% 92%; 
+    --sidebar-accent-foreground: 0 0% 98%; 
+    --sidebar-primary-foreground: 153 21% 89%; 
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}

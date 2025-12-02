@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 
-const inter = Inter({ 
+const montserrat = Montserrat({ 
   subsets: ["latin"],
   display: 'swap', // Otimização de fonte
 });
@@ -11,7 +11,21 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Casal do Tráfego | Gestão de Tráfego Pago e Estratégia Digital",
   description: "Especialistas em Tráfego Pago (Google Ads, Meta Ads) e Estratégia Digital. Aumente seu faturamento e atraia clientes qualificados. Atendimento em todo o Brasil.",
-  keywords: ["tráfego pago", "gestor de tráfego", "tráfego pago instagram", "gestor de tráfego pago", "gestão de tráfego", "marketing digital", "google ads", "facebook ads", "estratégia digital"],
+  keywords: [
+    "tráfego pago", 
+    "gestor de tráfego", 
+    "tráfego pago instagram", 
+    "gestor de tráfego pago", 
+    "gestão de tráfego", 
+    "marketing digital", 
+    "google ads", 
+    "facebook ads", 
+    "estratégia digital",
+    "trafego pago instagram",
+    "trafego pago google ads",
+    "empresas de trafego pago",
+    "trafego digital"
+  ],
   authors: [{ name: "Casal do Tráfego" }],
   creator: "Casal do Tráfego",
   publisher: "Casal do Tráfego",
@@ -75,7 +89,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className="dark">
-      <body className={`${inter.className} bg-[#0A091A] text-white`}>
+      <body className={`${montserrat.className} bg-background text-foreground`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

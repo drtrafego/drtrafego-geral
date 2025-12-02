@@ -1,0 +1,105 @@
+**Role:** Senior Frontend Engineer & UI/UX Designer
+**Tech Stack:** React, Tailwind CSS, Lucide React Icons.
+**Design Reference:** Clean B2B SaaS style (similar to Amplitude/Stripe).
+**Objective:** Create a high-conversion landing page ensuring the "Section 5" cards match exactly the reference image style (image on top, clean white card, blue link at bottom).
+
+---
+
+### 🎨 GLOBAL VISUAL GUIDELINES
+1.  **Typography:** Use a modern Sans-Serif font (Inter or system-ui).
+    * **Headings:** Dark Slate (`text-slate-900`), Bold/Extrabold, tight tracking (`tracking-tight`).
+    * **Body:** Medium Slate (`text-slate-600`), relaxed line-height (`leading-relaxed`).
+2.  **Color Palette:**
+    * **Primary Brand:** Royal Blue (`bg-blue-600`, `text-blue-600`, `hover:bg-blue-700`).
+    * **Backgrounds:** Clean White (`bg-white`) alternating with Light Gray/Blueish (`bg-slate-50` or `bg-blue-50/30`).
+    * **Borders:** Subtle (`border-slate-200`).
+3.  **Spacing:** Generous whitespace between sections (`py-20` or `py-24`).
+
+---
+
+### 🏗️ LAYOUT STRUCTURE & CONTENT MAPPING
+
+**1. HERO SECTION**
+* **Layout:** Centralized content, maximum impact. White background.
+* **Typography:** H1 should be massive (`text-5xl md:text-6xl font-extrabold`). Subheadline should be large (`text-xl text-slate-500`).
+* **Components:** Two distinct buttons centered.
+* **Content:**
+    * **H1:** "Atraia mais pacientes, fortaleça sua presença digital e tenha sua agenda sempre cheia."
+    * **Sub:** "Unimos Google, Meta e BOT humanizado para atrair pacientes qualificados, fortalecer seu nome e organizar seu fluxo de agendamentos."
+    * **CTA Button (Primary - Blue Pill):** "Quero mais pacientes qualificados"
+
+**2. SECTION 1 (Awareness)**
+* **Layout:** Simple single column, max-width-3xl centered.
+* **Style:** Clean text focused on the problem.
+* **Content:**
+    * **Title:** "Sua Clínica Precisa Ser Encontrada Todos os Dias"
+    * **Body:** "Hoje, os pacientes pesquisam antes de agendar: sintomas, especialidades clínicas, localização e reputação.\nA questão é simples:\n👉 Quando alguém procura sua especialidade no Google… aparece você ou outra clínica?\n👉 Sua comunicação nas redes transmite segurança, confiança e profissionalismo?\nNós criamos a presença digital que sua clínica precisa para atrair pacientes que já estão procurando seus serviços."
+    * **Link/CTA:** "Solicitar Sessão Estratégica Gratuita"
+
+**3. SECTION 2 (About - Casal do Tráfego)**
+* **Layout:** Two columns (Text Left, Image/Graphic Right).
+* **Visual:** Use a checkmark list style for the differentiators.
+* **Content:**
+    * **Title:** "Quem Somos: Casal do Tráfego"
+    * **Text:** "Nós somos o Casal do Tráfego, uma agência de marketing médico especialistas para médicos, clínicas e consultórios desde 2019."
+    * **List:**
+        * Trabalhamos com Google Ads + Meta Ads
+        * Construímos posicionamento médico
+        * Ajudamos clínicas a terem agenda cheia
+        * Aplicamos automações e BOT humanizado
+        * Criamos campanhas éticas, profissionais e sustentáveis
+    * **Focus Text:** "Nosso foco é simples: atrair, qualificar e converter pacientes todos os dias."
+    * **CTA:** "Quero melhorar minha presença digital"
+
+**4. SECTION 3 & 4 (Agitation - Problem/Solution)**
+* **Layout:** Split vertically. Top part "How patients search", Bottom part "What stops growth".
+* **Style:** Use a light slate background (`bg-slate-50`) to separate from previous section.
+* **Section 3 Content:**
+    * **Title:** "O Paciente Pesquisa Antes de Agendar"
+    * **Items (Grid of icons):** Fachada da clínica, Maior buscador, Presença profissional, Pacientes interessados.
+    * **Text:** "E quem não está presente estrategicamente… fica invisível. Por isso, clínicas com presença digital forte crescem mais rápido..."
+* **Section 4 Content:**
+    * **Title:** "O Que Impede Sua Clínica de Crescer"
+    * **Grid of 'X' items (Red icons):** Agenda instável, Pacientes pouco qualificados, Dependência de indicações, Falta de presença no Google, Recepção sobrecarregada, Falta de posicionamento, Concorrência crescente, Comunicação inconsistente.
+    * **Solution Text:** "Nós resolvemos todos esses pontos com estratégia."
+
+**5. SECTION 5 (THE CORE FEATURE CARDS - *Strictly Match Reference Image*)**
+* **Layout:** CSS Grid with 4 columns (`grid-cols-1 md:grid-cols-2 lg:grid-cols-4`).
+* **Card Design Specs (Must match image):**
+    * **Container:** White background, `h-full`, `flex flex-col`, `border border-slate-200`, `rounded-xl`, `overflow-hidden`, `hover:shadow-lg transition-shadow`.
+    * **Image Area (Top):** Top 40% of the card is a placeholder for an abstract 3D illustration or icon. Background of this area should be a soft color (blue-100 or slate-100).
+    * **Content Area (Bottom):** Padding `p-6`.
+    * **Typography:** Title is H3 bold (`text-lg font-bold text-slate-900`). Body is small (`text-sm text-slate-600 mt-2`).
+    * **Action Link:** At the bottom, text in Blue (`text-blue-600`), bold weight, with a chevron arrow (`>`). Text: "Read the guide >" (But use the specific titles below).
+* **Content Mapping:**
+    * **Card 1:** Title: "Estratégia Digital" / Body: "Diagnóstico completo, Posicionamento médico, Análise do paciente ideal..."
+    * **Card 2:** Title: "Tráfego Pago (Google + Meta)" / Body: "Unimos o poder das duas principais plataformas para gerar leads quentes e autoridade."
+    * **Card 3:** Title: "Branding e Autoridade" / Body: "Clareza de comunicação, Posicionamento estratégico e narrativa profissional."
+    * **Card 4:** Title: "BOT Humanizado" / Body: "Atendimento 24h, qualificação automática e aumento de agendamentos."
+
+**6. SECTION 6 (Target Audience)**
+* **Layout:** Simple centered list or checklist.
+* **Content:** "Para Quem É": Clínicas, Consultórios, Médicos (todos), Particular, Quem quer agenda cheia, etc.
+
+**7. SECTION 7 (Testimonials)**
+* **Layout:** Grid of 2x2.
+* **Card Style:** Simple white card, shadow-sm, quote icon.
+* **Content:**
+    1.  **Dra. Mariana Ribeiro:** "Eu já tinha Instagram... atendo apenas o perfil de paciente certo."
+    2.  **Dr. Felipe Moura:** "Sempre tive dificuldade... agora recebo leads qualificados."
+    3.  **Dra. Ana Paula Camargo:** "Finalmente entendi a importância do posicionamento..."
+    4.  **Dr. Ricardo Sanches:** "O BOT de atendimento reduziu as ligações..."
+
+**8. SECTION 8, 9, 10 (Final CTA & Form)**
+* **Layout:** Full width, background Blue (`bg-blue-600`). Text White.
+* **Headline:** "Pronto para atrair muitos pacientes nos próximos 180 dias?"
+* **Sub:** "Agende sua Sessão Estratégica Gratuita com o Casal do Tráfego."
+* **Form Component:** A white floating card (`bg-white text-slate-900 rounded-lg p-8 max-w-md mx-auto mt-8`).
+    * **Inputs:** Nome completo, E-mail, WhatsApp.
+    * **Button:** Full width, large, distinct color (maybe darker blue or contrasting color).
+* **Footer Text:** "A internet hoje é o que separa clínicas que crescem de clínicas que permanecem invisíveis..."
+
+---
+
+### 🚀 EXECUTION INSTRUCTION
+Generate the full HTML structure using React syntax. Use Tailwind CSS for all styling. Ensure the **Section 5 Cards** look exactly like the reference: Image on top, Title/Text in middle, Blue Link at bottom.
