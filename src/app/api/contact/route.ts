@@ -7,19 +7,16 @@ import nodemailer from 'nodemailer';
 // const sql = neon(process.env.DATABASE_URL!);
 
 // Função para enviar notificação por email
-async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: string, dbMeta?: any, sheetsError?: string) {
+async function sendEmailNotification(lead: any) {
   try {
-    console.log('--- INICIANDO DIAGNÓSTICO DE EMAIL ---');
+    console.log('--- INICIANDO NOTIFICAÇÃO DE EMAIL ---');
     const host = process.env.EMAIL_HOST;
     const portEnv = process.env.EMAIL_PORT;
     const user = process.env.EMAIL_USER;
     const pass = process.env.EMAIL_PASS;
     const to = process.env.EMAIL_TO;
 
-    // ... logs de diagnóstico ...
-
     if (!host || !portEnv || !user || !pass || !to) {
-        // ...
       return;
     }
     
@@ -28,68 +25,18 @@ async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: st
     const transporter = nodemailer.createTransport({
       host,
       port,
-      secure: port === 465, // true para 465, false para outras portas
+      secure: port === 465,
       auth: {
         user,
         pass,
       },
     });
 
-    // Prepara aviso de erro do banco, se houver
-    let dbStatusHtml = '<p style="color: green;"><strong>Banco de Dados (Neon):</strong> Salvo com sucesso ✅</p>';
-    let dbStatusText = 'Banco de Dados (Neon): Salvo com sucesso';
-    let subjectPrefix = '';
-
-    if (dbError) {
-        subjectPrefix = '[ALERTA DB] ';
-        dbStatusHtml = `
-            <div style="background-color: #ffebee; border: 1px solid #ef9a9a; color: #c62828; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-                <strong>⚠️ FALHA AO SALVAR NO NEON (BANCO DE DADOS)</strong><br/>
-                O lead foi recebido, mas não pôde ser salvo no banco.<br/>
-                <strong>Erro:</strong> ${dbError}<br/>
-                <strong>URL do Banco (parcial):</strong> ${dbUrlUsed || 'Não identificada'}
-            </div>
-        `;
-        dbStatusText = `⚠️ FALHA AO SALVAR NO BANCO DE DADOS:\nErro: ${dbError}\nURL: ${dbUrlUsed}\n`;
-    } else if (dbMeta) {
-        // Adiciona informações de onde foi salvo para ajudar o usuário a localizar
-        dbStatusHtml += `
-            <div style="background-color: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; padding: 10px; margin-bottom: 15px; border-radius: 4px; font-size: 12px;">
-                <strong>📍 Rastreamento do Banco de Dados:</strong><br/>
-                <strong>Host (Servidor):</strong> ${dbMeta.host}<br/>
-                <strong>Total de Leads na Tabela:</strong> ${dbMeta.count}<br/>
-                <em>Verifique se o endpoint no seu painel Neon confere com o Host acima.</em>
-            </div>
-        `;
-        dbStatusText += `\n[RASTREAMENTO DB]\nHost: ${dbMeta.host}\nTotal Leads: ${dbMeta.count}\n`;
-    }
-
-    // Prepara aviso de erro do Google Sheets, se houver
-    let sheetsStatusHtml = '<p style="color: green;"><strong>Google Sheets:</strong> Salvo com sucesso ✅</p>';
-    let sheetsStatusText = 'Google Sheets: Salvo com sucesso';
-
-    if (sheetsError) {
-        if (!subjectPrefix) subjectPrefix = '[ALERTA SHEETS] ';
-        else subjectPrefix = '[ALERTA DB+SHEETS] ';
-        
-        sheetsStatusHtml = `
-            <div style="background-color: #fff3e0; border: 1px solid #ffcc80; color: #e65100; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-                <strong>⚠️ FALHA AO SALVAR NO GOOGLE SHEETS</strong><br/>
-                O lead não foi salvo na planilha.<br/>
-                <strong>Erro:</strong> ${sheetsError}
-            </div>
-        `;
-        sheetsStatusText = `⚠️ FALHA AO SALVAR NO GOOGLE SHEETS:\nErro: ${sheetsError}\n`;
-    }
-
     const mailOptions = {
       from: `"Dr. Tráfego Lead" <${user}>`,
       to,
-      subject: `${subjectPrefix}Novo Lead Cadastrado: ${lead.name}`,
+      subject: `Novo Lead Cadastrado: ${lead.name}`,
       text: `
-        ${dbStatusText}
-        ${sheetsStatusText}
-        
         Novo lead capturado no site!
         
         Nome: ${lead.name}
@@ -100,8 +47,6 @@ async function sendEmailNotification(lead: any, dbError?: string, dbUrlUsed?: st
       html: `
         <div style="font-family: Arial, sans-serif; color: #333;">
           <h2 style="color: #0066cc;">Novo Lead Capturado! 🚀</h2>
-          ${dbStatusHtml}
-          ${sheetsStatusHtml}
           <p>Um novo cliente em potencial acabou de se cadastrar no site.</p>
           <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
             <tr>
@@ -319,23 +264,13 @@ export async function POST(request: NextRequest) {
 
     // Primeiro, tenta salvar no banco de dados com TIMEOUT de 15 segundos
     let savedLead;
-    let dbErrorMsg = undefined;
-    let dbUrlMasked = undefined;
-    let dbMeta = undefined;
 
     try {
         console.log('Iniciando tentativa de salvar no Neon (Timeout: 15s)...');
         savedLead = await withTimeout(saveToNeon(initialLead), 15000);
-        if (savedLead._meta) {
-            dbMeta = savedLead._meta;
-        }
     } catch (dbError: any) {
         console.error('⚠️ FALHA OU TIMEOUT NO NEON:', dbError);
         
-        dbErrorMsg = dbError.message || String(dbError);
-        const dbUrl = process.env.DATABASE_URL || '';
-        dbUrlMasked = dbUrl.replace(/:[^:]*@/, ':****@');
-
         // Cria um objeto de backup
         savedLead = {
             id: 'backup_timeout_' + Date.now(),
@@ -347,16 +282,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Em seguida, tenta salvar no Google Sheets (sequencial para pegar o status para o email)
-    let sheetsErrorMsg = undefined;
     try {
         await appendToSheet(savedLead);
     } catch (error: any) {
         console.error('Erro capturado no POST ao salvar no Sheets:', error);
-        sheetsErrorMsg = error.message || String(error);
     }
 
-    // Por fim, envia o email com o status de tudo
-    await sendEmailNotification(savedLead, dbErrorMsg, dbUrlMasked, dbMeta, sheetsErrorMsg);
+    // Por fim, envia o email (agora sem notificação de status do sistema)
+    await sendEmailNotification(savedLead);
     
     // Retorna sucesso
     return NextResponse.json({ 
