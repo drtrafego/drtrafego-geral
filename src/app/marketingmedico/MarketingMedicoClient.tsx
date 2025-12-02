@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { Outfit } from "next/font/google";
 import { 
   CheckCircle, 
   CheckCircle2,
@@ -28,6 +29,8 @@ import {
   ArrowRight,
   RotateCw
 } from "lucide-react";
+
+const outfit = Outfit({ subsets: ["latin"] });
 
 export default function MarketingMedicoClient() {
   // Form Logic
@@ -106,10 +109,10 @@ export default function MarketingMedicoClient() {
   };
 
   return (
-    <div className="font-sans bg-background text-foreground selection:bg-primary/20 selection:text-primary">
+    <div className={`${outfit.className} bg-background text-foreground selection:bg-primary/20 selection:text-primary`}>
       
       {/* 1. HERO SECTION */}
-      <section className="w-full pt-24 pb-20 md:pt-32 md:pb-24 bg-background">
+      <section className="w-full pt-16 pb-12 md:pt-24 md:pb-16 bg-background">
         <div className="container px-4 md:px-6 max-w-7xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-extrabold text-foreground tracking-tight mb-6 leading-tight">
             Atraia mais pacientes, fortaleça sua presença digital e tenha sua <span className="text-primary">agenda sempre cheia.</span>
@@ -126,12 +129,12 @@ export default function MarketingMedicoClient() {
       </section>
 
       {/* 2. SECTION 1 (Awareness) */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="container px-4 md:px-6 max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
             Sua Clínica Precisa Ser Encontrada Todos os Dias
           </h2>
-          <div className="text-lg text-muted-foreground space-y-6 leading-relaxed text-left md:text-center">
+          <div className="text-lg text-muted-foreground space-y-4 leading-relaxed text-left md:text-center">
             <p>
               Hoje, os pacientes pesquisam antes de agendar: sintomas, especialidades clínicas, localização e reputação.
             </p>
@@ -161,9 +164,9 @@ export default function MarketingMedicoClient() {
       </section>
 
       {/* 3. SECTION 2 (About - Casal do Tráfego) */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="container px-4 md:px-6 max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-6">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                 Quem Somos: Casal do Tráfego
@@ -212,11 +215,11 @@ export default function MarketingMedicoClient() {
       </section>
 
       {/* 4. SECTIONS 3 & 4 (Agitation - Problem/Solution) */}
-      <section className="py-20 bg-muted/30">
-        <div className="container px-4 md:px-6 max-w-7xl mx-auto space-y-20">
+      <section className="py-12 bg-muted/30">
+        <div className="container px-4 md:px-6 max-w-7xl mx-auto space-y-12">
           
           {/* Section 3: How Patients Search */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-3xl font-bold text-foreground mb-6">
                 O Paciente Pesquisa Antes de Agendar
@@ -272,9 +275,9 @@ export default function MarketingMedicoClient() {
       </section>
 
       {/* 5. SECTION 5 (THE CORE FEATURE CARDS) */}
-      <section className="py-24 bg-background">
+      <section className="py-16 bg-background">
         <div className="container px-4 md:px-6 max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Nossa Metodologia Exclusiva
             </h2>
@@ -361,9 +364,9 @@ export default function MarketingMedicoClient() {
       </section>
 
       {/* 6. SECTION 6 (Target Audience) */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="container px-4 md:px-6 max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-10">
+          <h2 className="text-3xl font-bold text-foreground mb-8">
             Para Quem É Essa Estratégia?
           </h2>
           <div className="grid md:grid-cols-3 gap-6 text-left">
@@ -381,9 +384,9 @@ export default function MarketingMedicoClient() {
       </section>
 
       {/* 7. SECTION 7 (Testimonials) */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="container px-4 md:px-6 max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-foreground text-center mb-16">
+          <h2 className="text-3xl font-bold text-foreground text-center mb-10">
             O Que Nossos Clientes Dizem
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -406,9 +409,9 @@ export default function MarketingMedicoClient() {
       </section>
 
       {/* 8. FINAL CTA & FORM */}
-      <section id="sessao-estrategica" className="py-24 bg-primary">
+      <section id="sessao-estrategica" className="py-16 bg-primary">
         <div className="container px-4 md:px-6 max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
             <div className="text-primary-foreground space-y-6">
               <h2 className="text-4xl md:text-5xl font-bold leading-tight">
                 Pronto para atrair muitos pacientes nos próximos 180 dias?
