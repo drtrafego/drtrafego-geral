@@ -1,0 +1,106 @@
+**Role:** Senior Frontend Designer & UX Specialist
+**Tech Stack:** React, Tailwind CSS, Lucide React Icons.
+**Design Reference:** Premium Law Firm style ("Dark Mode" elegance, Serif fonts, Gold/Beige accents).
+**Objective:** Create a high-authority landing page for a marketing agency targeting lawyers, replicating the visual structure of the provided "LawFor" reference image.
+
+---
+
+### 🎨 GLOBAL VISUAL GUIDELINES
+1.  **Typography (CRITICAL):**
+    * **Headings:** Use a **Serif Font** (like `font-serif` / Playfair Display) for all H1, H2, H3. This creates the "Authority/Luxury" look.
+    * **Body:** Use a modern Sans-Serif (`font-sans`) for readability.
+2.  **Color Palette:**
+    * **Primary Background:** Deep Dark Blue/Charcoal (`bg-slate-900` or `bg-[#0B1120]`).
+    * **Secondary Background:** Light Beige/Off-White (`bg-[#F5F5F0]`) for specific sections (like the FAQ/Testimonials).
+    * **Accents:** Muted Gold/Beige (`text-[#D4AF37]` or `bg-[#D4AF37]`) for borders, buttons, or icons.
+    * **Text:** White on dark sections; Dark Slate on light sections.
+3.  **Visual Elements:** Thin elegant lines, circular icon containers, high-quality spacing (`py-24`).
+
+---
+
+### 🏗️ LAYOUT STRUCTURE & CONTENT MAPPING
+
+**1. HERO SECTION (Dark Background)**
+* **Visual:** Deep dark background. On the left: Large Serif Headline. On the right: A floating "Glassmorphism" or Gold-bordered card (replicating the 'Emergency Call' card in reference).
+* **Content:**
+    * **H1 (Serif, White):** "Torne seu escritório uma referência na sua região com presença digital forte, posicionamento estratégico e atraia leads qualificados todos os dias."
+    * **Sub (Sans, Light Gray):** "Estratégia inteligente unindo Google, Meta e BOT humanizado para ampliar sua visibilidade e autoridade."
+    * **Floating Card (The CTA):**
+        * Text: "Pronto para crescer?"
+        * Button: "Quero leads qualificados" (Gold/Beige Background).
+
+**2. SECTION 1 (Intro - Awareness)**
+* **Layout:** Clean, centered text. Light background (`bg-[#F5F5F0]`).
+* **Typography:** Elegant Serif Heading, centered.
+* **Content:**
+    * **Title:** "Seu Escritório Precisa Ser Encontrada Todos os Dias"
+    * **Body:** "Potenciais clientes pesquisam antes de decidir. Eles analisam nome, especialidade e reputação.\nSe você não aparece no Google, alguém aparece no seu lugar."
+    * **CTA Link:** "Solicitar Sessão Estratégica"
+
+**3. SECTION 5 (THE 4 PILLARS - Replicating the 'Services' Grid)**
+* **Note:** I moved Section 5 up because it matches the visual grid of the reference image immediately after the intro.
+* **Layout:** 4-Column Grid.
+* **Card Style:** Minimalist. Icon on top, Serif Title, Divider line, Description.
+    * *IMPORTANT:* Make one card (e.g., the second one) have a Dark Background to stand out (just like the 'Business Law' card in the image).
+* **Content:**
+    1.  **Card 1:** "Estratégia Digital" (Direcionamento claro, Posicionamento).
+    2.  **Card 2 (Highlighted/Dark):** "Tráfego Pago" (Google Ads + Meta Ads, Busca Ativa e Autoridade).
+    3.  **Card 3:** "Branding Jurídico" (Nome forte, Comunicação alinhada).
+    4.  **Card 4:** "BOT Humanizado" (Atendimento rápido, Triagem inteligente).
+
+**4. SECTION 2 (About - The 'Consultation' Section)**
+* **Visual:** Dark Background again. Split layout.
+    * **Left:** Image (Abstract Law/Office).
+    * **Right:** Text content + 3 Circular Icons.
+* **Content:**
+    * **Title:** "Quem Somos: Casal do Tráfego"
+    * **Text:** "Especialistas em estratégia digital e posicionamento para escritórios jurídicos desde 2019."
+    * **3 Pillars (Icons):**
+        1.  Autoridade Profissional
+        2.  Visibilidade Contínua
+        3.  Atendimento Organizado (BOT)
+    * **CTA:** "Quero crescer com estratégia"
+
+**5. SECTION 4 (Problems - Replicating the 'FAQ' Accordion)**
+* **Visual:** Light Background (`bg-[#F5F5F0]`).
+* **Layout:** List/Accordion on the Left, Image on the Right (Professional looking at tablet/computer).
+* **Context:** Instead of questions, list the **Problems**.
+* **Content:**
+    * **Title:** "O Que Impede Seu Escritório de Avançar"
+    * **Items (Style as expandable rows or clear list items):**
+        1. Baixa visibilidade no Google
+        2. Comunicação excessivamente técnica
+        3. Falta de clareza na especialidade
+        4. Atendimento desorganizado
+        5. Concorrência crescente
+    * **Closing Statement:** "Tudo isso muda com estratégia."
+
+**6. SECTION 3 & 6 (Authority & Target Audience)**
+* **Layout:** A wide banner section or simple text block. Dark background.
+* **Content:** "Presença Digital é Importante. Ser Reconhecido é Essencial." (Combine the core message of Section 3 here).
+* **List (Para Quem É):** Display as a horizontal feature list or checkmarks: "Escritórios jurídicos", "Advogados individuais", "Quem quer previsibilidade".
+
+**7. SECTION 7 (Testimonials - Replicating the 'Latest News' Grid)**
+* **Visual:** Light Beige Background. 3 or 4 Column Grid.
+* **Card Style:** Image at top (Portrait of lawyer), Text below.
+* **Content:**
+    * **Dr. Gustavo Leal (Civil):** "Depois da estratégia, meu escritório passou a ser encontrado..."
+    * **Dra. Juliana Andrade (Família):** "O BOT humanizado reduziu meu tempo..."
+    * **Dr. Ricardo Alencar (Trabalhista):** "A união Google + Meta fez toda diferença."
+    * **Dra. Fernanda Duarte (Consumidor):** "Meu escritório ganhou identidade..."
+
+**8. FINAL CTA & FORM**
+* **Visual:** Dark Footer Area.
+* **Content:**
+    * **Headline:** "Pronto para fortalecer sua presença digital?"
+    * **Form:** Simple inputs (Nome, Email, WhatsApp) designed elegantly (transparent background inputs with gold borders).
+    * **Button:** "Receba seu diagnóstico estratégico"
+
+---
+
+### 🚀 EXECUTION INSTRUCTION
+Generate the HTML/React code.
+* Use `font-serif` for headings to match the LawFor vibe.
+* Use `bg-slate-900` for dark sections and `bg-[#F5F5F0]` for light sections.
+* Ensure the "Services/Pillars" section has the specific grid layout with one highlighted card.
+* Make it look expensive and professional.
