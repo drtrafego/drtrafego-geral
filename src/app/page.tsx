@@ -135,11 +135,11 @@ export default function Home() {
         <section className="w-full pt-32 pb-16 md:pt-40 md:pb-20 relative">
             <div className="container px-4 md:px-6">
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 leading-normal shadow-[0_0_40px_rgba(156,39,176,0.4)] text-center md:text-left">
+                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 leading-normal shadow-[0_0_40px_rgba(156,39,176,0.4)] text-center md:text-left py-4">
                         Aumente seu faturamento, atraia os clientes certos e impulsione suas vendas com presença digital estratégica.
                     </h1>
                     <p className="mt-8 text-lg md:text-xl text-gray-300 max-w-3xl text-center md:text-left">
-                        Quando sua empresa aparece para quem realmente procura o que você faz, crescer deixa de ser sorte — e vira previsibilidade.
+                        Quando sua empresa aparece para quem realmente procura o que você faz, crescer deixa de ser sorte e vira previsibilidade.
                     </p>
                     <div className="mt-12 flex justify-center md:justify-start">
                         <Button asChild size="lg" className="bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-auto min-h-14 py-4 px-6 md:px-10 text-lg whitespace-normal text-center">
@@ -397,9 +397,9 @@ export default function Home() {
             <div className="container px-4 md:px-6 max-w-7xl mx-auto">
                 <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500">O QUE NOSSOS CLIENTES DIZEM</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <GlassCard className="p-8"><p className="text-gray-300 italic text-lg">“Finalmente deixamos de depender apenas de indicações.”</p><p className="text-right mt-4 font-bold text-purple-300">- Clínica de Estética</p></GlassCard>
-                    <GlassCard className="p-8"><p className="text-gray-300 italic text-lg">“Contratamos para aumentar os agendamentos e em menos de 30 dias já tínhamos enchido a agenda da semana seguinte.”</p><p className="text-right mt-4 font-bold text-purple-300">- Dono de Barbearia</p></GlassCard>
-                    <GlassCard className="p-8"><p className="text-gray-300 italic text-lg">“Tínhamos um bom produto, mas ninguém conhecia. Hoje, somos referência na nossa cidade.”</p><p className="text-right mt-4 font-bold text-purple-300">- Loja de Roupas</p></GlassCard>
+                    <GlassCard className="p-8"><p className="text-gray-300 italic text-lg">“Eu já tinha investido em anúncios antes, mas nunca vinha cliente certo. Depois que o Casal do Tráfego ajustou meu posicionamento e organizou meu atendimento com o BOT, os leads começaram a chegar qualificados. Hoje meu processo é mais claro, profissional e muito mais eficiente.”</p><p className="text-right mt-4 font-bold text-purple-300">- Marcos Silva</p></GlassCard>
+                    <GlassCard className="p-8"><p className="text-gray-300 italic text-lg">“O trabalho deles fez total diferença. Minha marca ficou mais profissional, meu Instagram passou a atrair as pessoas certas e os anúncios no Google trouxeram um fluxo constante de contatos. É a primeira vez que sinto previsibilidade no meu negócio.”</p><p className="text-right mt-4 font-bold text-purple-300">- Carolina Mendes</p></GlassCard>
+                    <GlassCard className="p-8"><p className="text-gray-300 italic text-lg">“A estratégia do Casal do Tráfego mudou o jogo por aqui. Eles olharam minha comunicação, criaram campanhas inteligentes e estruturaram todo meu atendimento. Resultado: mais leads, mais autoridade e muito mais organização no dia a dia.”</p><p className="text-right mt-4 font-bold text-purple-300">- Leonardo Farias</p></GlassCard>
                 </div>
             </div>
         </section>

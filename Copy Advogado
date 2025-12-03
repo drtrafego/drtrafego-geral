@@ -1,106 +1,138 @@
-**Role:** Senior Frontend Designer & UX Specialist
+**Role:** Senior Frontend Engineer & UI/UX Designer (15+ Years Experience)
 **Tech Stack:** React, Tailwind CSS, Lucide React Icons.
-**Design Reference:** Premium Law Firm style ("Dark Mode" elegance, Serif fonts, Gold/Beige accents).
-**Objective:** Create a high-authority landing page for a marketing agency targeting lawyers, replicating the visual structure of the provided "LawFor" reference image.
+**Font:** 'Playfair Display' (Serif for Headings), 'Inter' or 'Lato' (Sans for Body).
+**Design Reference:** Premium Law Firm ("LawFor" style - Dark Mode, Gold/Beige Accents, Serif Typography).
+**Objective:** Build a high-authority landing page. **CRITICAL:** Use the EXACT COPY provided below. Do NOT summarize or truncate any text. The layout must adapt to fit the full content.
 
 ---
 
-### 🎨 GLOBAL VISUAL GUIDELINES
-1.  **Typography (CRITICAL):**
-    * **Headings:** Use a **Serif Font** (like `font-serif` / Playfair Display) for all H1, H2, H3. This creates the "Authority/Luxury" look.
-    * **Body:** Use a modern Sans-Serif (`font-sans`) for readability.
-2.  **Color Palette:**
-    * **Primary Background:** Deep Dark Blue/Charcoal (`bg-slate-900` or `bg-[#0B1120]`).
-    * **Secondary Background:** Light Beige/Off-White (`bg-[#F5F5F0]`) for specific sections (like the FAQ/Testimonials).
-    * **Accents:** Muted Gold/Beige (`text-[#D4AF37]` or `bg-[#D4AF37]`) for borders, buttons, or icons.
-    * **Text:** White on dark sections; Dark Slate on light sections.
-3.  **Visual Elements:** Thin elegant lines, circular icon containers, high-quality spacing (`py-24`).
+### 🎨 DESIGN SYSTEM & ATMOSPHERE
+* **Vibe:** Authority, Trust, High-Ticket, Tradition meeting Modernity.
+* **Colors:**
+    * **Background:** `#0f172a` (Slate 900/Dark Navy) for main sections.
+    * **Surface:** `#1e293b` (Slate 800) for cards.
+    * **Light Section:** `#f8fafc` (Slate 50) or Beige `#f5f5f4` for the "Problems" or "Testimonials" section to create contrast.
+    * **Accent:** `#d4af37` (Metallic Gold) for borders, buttons, and icons.
+    * **Text:** White `#ffffff` on dark; Charcoal `#334155` on light.
+* **Typography:**
+    * `font-serif` (Playfair Display) for ALL Headings (H1, H2, H3).
+    * `font-sans` (Inter) for body text.
 
 ---
 
-### 🏗️ LAYOUT STRUCTURE & CONTENT MAPPING
+### 🏗️ LAYOUT STRUCTURE & EXACT COPY MAPPING
 
-**1. HERO SECTION (Dark Background)**
-* **Visual:** Deep dark background. On the left: Large Serif Headline. On the right: A floating "Glassmorphism" or Gold-bordered card (replicating the 'Emergency Call' card in reference).
-* **Content:**
-    * **H1 (Serif, White):** "Torne seu escritório uma referência na sua região com presença digital forte, posicionamento estratégico e atraia leads qualificados todos os dias."
-    * **Sub (Sans, Light Gray):** "Estratégia inteligente unindo Google, Meta e BOT humanizado para ampliar sua visibilidade e autoridade."
-    * **Floating Card (The CTA):**
-        * Text: "Pronto para crescer?"
-        * Button: "Quero leads qualificados" (Gold/Beige Background).
+**1. HERO SECTION (Dark & Cinematic)**
+* **Layout:** Split. Left: Text. Right: Floating Gold/Glass Card CTA. Background: Dark office blur.
+* **Copy:**
+    * **Headline (H1 Serif):** "Torne seu escritório uma referência na sua região com presença digital forte, posicionamento estratégico e atraia leads qualificados todos os dias."
+    * **Subheadline:** "Estratégia inteligente unindo Google, Meta e BOT humanizado para ampliar sua visibilidade, transmitir autoridade e profissionalizar seu fluxo de atendimento."
+    * **CTA Button:** "Quero leads qualificados"
 
-**2. SECTION 1 (Intro - Awareness)**
-* **Layout:** Clean, centered text. Light background (`bg-[#F5F5F0]`).
-* **Typography:** Elegant Serif Heading, centered.
-* **Content:**
-    * **Title:** "Seu Escritório Precisa Ser Encontrada Todos os Dias"
-    * **Body:** "Potenciais clientes pesquisam antes de decidir. Eles analisam nome, especialidade e reputação.\nSe você não aparece no Google, alguém aparece no seu lugar."
-    * **CTA Link:** "Solicitar Sessão Estratégica"
+**2. SECTION 1 (Awareness - Full Detail)**
+* **Style:** Light Background (`#f5f5f4`) to maximize readability of the list.
+* **Layout:** Centered Heading, Text block, then a Checkmark List.
+* **Copy:**
+    * **Title (H2):** "Seu Escritório Precisa Ser Encontrada Todos os Dias"
+    * **Text 1:** "Potenciais clientes pesquisam antes de decidir. Eles analisam:"
+    * **List (Use Gold Checkmarks):**
+        * "nome do escritório"
+        * "especialidade"
+        * "clareza na comunicação"
+        * "conteúdos informativos"
+        * "apresentação profissional"
+        * "primeira impressão digital"
+    * **Text 2:** "Essa análise acontece antes de qualquer contato.\nSe você não aparece no Google, alguém aparece no seu lugar.\nSe sua presença digital não transmite autoridade, alguém transmite.\nEscritórios com presença digital forte têm mais oportunidades, mais previsibilidade e maior reconhecimento na região."
+    * **CTA Link/Button:** "Solicitar Sessão Estratégica"
 
-**3. SECTION 5 (THE 4 PILLARS - Replicating the 'Services' Grid)**
-* **Note:** I moved Section 5 up because it matches the visual grid of the reference image immediately after the intro.
-* **Layout:** 4-Column Grid.
-* **Card Style:** Minimalist. Icon on top, Serif Title, Divider line, Description.
-    * *IMPORTANT:* Make one card (e.g., the second one) have a Dark Background to stand out (just like the 'Business Law' card in the image).
-* **Content:**
-    1.  **Card 1:** "Estratégia Digital" (Direcionamento claro, Posicionamento).
-    2.  **Card 2 (Highlighted/Dark):** "Tráfego Pago" (Google Ads + Meta Ads, Busca Ativa e Autoridade).
-    3.  **Card 3:** "Branding Jurídico" (Nome forte, Comunicação alinhada).
-    4.  **Card 4:** "BOT Humanizado" (Atendimento rápido, Triagem inteligente).
-
-**4. SECTION 2 (About - The 'Consultation' Section)**
-* **Visual:** Dark Background again. Split layout.
-    * **Left:** Image (Abstract Law/Office).
-    * **Right:** Text content + 3 Circular Icons.
-* **Content:**
+**3. SECTION 2 (About - Casal do Tráfego)**
+* **Style:** Dark Background (`#0f172a`).
+* **Layout:** Image Left (Lawyer/Strategy photo), Text Right.
+* **Copy:**
     * **Title:** "Quem Somos: Casal do Tráfego"
-    * **Text:** "Especialistas em estratégia digital e posicionamento para escritórios jurídicos desde 2019."
-    * **3 Pillars (Icons):**
-        1.  Autoridade Profissional
-        2.  Visibilidade Contínua
-        3.  Atendimento Organizado (BOT)
-    * **CTA:** "Quero crescer com estratégia"
+    * **Text 1:** "Somos o Casal do Tráfego, especialistas em estratégia digital e posicionamento para escritórios jurídicos desde 2019."
+    * **Text 2:** "Construímos presença digital com foco em:"
+    * **List:**
+        * "Autoridade profissional"
+        * "Clareza na especialidade"
+        * "Visibilidade contínua"
+        * "Google + Meta atuando em conjunto"
+        * "BOT humanizado para organizar o atendimento"
+        * "Branding jurídico sólido"
+    * **Closing Text:** "Não trabalhamos com promessas, trabalhamos com estratégia, ética e posicionamento.\nNosso objetivo é criar uma presença digital que fortalece seu nome e abre novas oportunidades de forma contínua."
+    * **CTA Button:** "Quero crescer com estratégia"
 
-**5. SECTION 4 (Problems - Replicating the 'FAQ' Accordion)**
-* **Visual:** Light Background (`bg-[#F5F5F0]`).
-* **Layout:** List/Accordion on the Left, Image on the Right (Professional looking at tablet/computer).
-* **Context:** Instead of questions, list the **Problems**.
-* **Content:**
+**4. SECTION 3 (Authority Argument)**
+* **Style:** Dark Surface (`#1e293b`) or Gold Bordered Box.
+* **Layout:** Text Heavy, emphasize typography.
+* **Copy:**
+    * **Title:** "Presença Digital é Importante. Ser Reconhecido é Essencial."
+    * **Text:** "Não basta aparecer: é preciso comunicar como seu escritório atua, qual é seu diferencial e por que você é a escolha certa.\nA percepção do cliente sobre o seu escritório é formada, principalmente, por:"
+    * **List 1:**
+        * "a especialidade apresentada"
+        * "a clareza da comunicação"
+        * "a forma como você se posiciona"
+        * "a impressão transmitida logo de início"
+    * **Text 2:** "Quando esses elementos trabalham juntos, o seu escritório:"
+    * **List 2:**
+        * "deixa de disputar atenção"
+        * "passa a inspirar segurança"
+        * "se diferencia naturalmente"
+        * "é reconhecido como referência na região"
+    * **Closing:** "Uma marca jurídica forte não apenas melhora sua presença digital, ela abre portas, aumenta oportunidades e posiciona seu escritório acima da concorrência em um mercado cada vez mais competitivo."
+
+**5. SECTION 4 (Problems - The "Accordion" or List)**
+* **Style:** Light Background (`#f5f5f4`).
+* **Layout:** List of "Pain Points" with Red 'X' icons.
+* **Copy:**
     * **Title:** "O Que Impede Seu Escritório de Avançar"
-    * **Items (Style as expandable rows or clear list items):**
-        1. Baixa visibilidade no Google
-        2. Comunicação excessivamente técnica
-        3. Falta de clareza na especialidade
-        4. Atendimento desorganizado
-        5. Concorrência crescente
-    * **Closing Statement:** "Tudo isso muda com estratégia."
+    * **Subtitle:** "Os principais desafios de escritórios hoje:"
+    * **Items:**
+        * "Baixa visibilidade no Google"
+        * "Comunicação excessivamente técnica"
+        * "Falta de clareza na especialidade"
+        * "Presença digital inconsistente"
+        * "Concorrência crescente e pouco diferenciada"
+        * "Falta de previsibilidade de oportunidades"
+        * "Atendimento desorganizado"
+    * **Solution Text (Gold/Bold):** "Tudo isso muda com estratégia, posicionamento e presença digital bem construída."
 
-**6. SECTION 3 & 6 (Authority & Target Audience)**
-* **Layout:** A wide banner section or simple text block. Dark background.
-* **Content:** "Presença Digital é Importante. Ser Reconhecido é Essencial." (Combine the core message of Section 3 here).
-* **List (Para Quem É):** Display as a horizontal feature list or checkmarks: "Escritórios jurídicos", "Advogados individuais", "Quem quer previsibilidade".
+**6. SECTION 5 (Services - Detailed Grid)**
+* **Style:** Dark Background. 4 Columns. Cards must be tall enough to fit text.
+* **Copy:**
+    * **Card 1 Title:** "1. Estratégia Digital Jurídica Completa"
+    * **Card 1 Body:** "– Direcionamento claro\n– Posicionamento por especialidade\n– Construção da marca jurídica\n– Mensagens alinhadas ao perfil de cliente ideal\n– Plano de presença digital contínua"
+    * **Card 2 Title:** "2. Tráfego Pago (Google + Meta)"
+    * **Card 2 Body:** "A união das duas principais plataformas para o mercado jurídico:\n\n**Google Ads — Busca Ativa**\n✔ Você aparece quando alguém procura sua especialidade\n✔ Gera contatos alinhados\n✔ Chega primeiro ao potencial cliente\n\n**Meta Ads — Autoridade e Presença**\n✔ Clareza da atuação\n✔ Construção de marca\n✔ Relacionamento constante\n✔ Percepção profissional\n\nEssa combinação aumenta visibilidade e gera oportunidades com consistência."
+    * **Card 3 Title:** "3. Branding Jurídico"
+    * **Card 3 Body:** "– Nome do escritório bem posicionado\n– Especialidade apresentada com clareza\n– Comunicação alinhada ao tom jurídico\n– Presença forte e diferenciada\n– Percepção de autoridade"
+    * **Card 4 Title:** "4. BOT Humanizado de Atendimento"
+    * **Card 4 Body:** "✔ Atendimento rápido\n✔ Triagem inteligente\n✔ Organização de contatos\n✔ Redução de demandas improdutivas\n✔ Mais eficiência para o escritório\n✔ Melhor experiência para o cliente\n\nO BOT é um diferencial que poucos escritórios utilizam e quem usa já está à frente."
 
-**7. SECTION 7 (Testimonials - Replicating the 'Latest News' Grid)**
-* **Visual:** Light Beige Background. 3 or 4 Column Grid.
-* **Card Style:** Image at top (Portrait of lawyer), Text below.
-* **Content:**
-    * **Dr. Gustavo Leal (Civil):** "Depois da estratégia, meu escritório passou a ser encontrado..."
-    * **Dra. Juliana Andrade (Família):** "O BOT humanizado reduziu meu tempo..."
-    * **Dr. Ricardo Alencar (Trabalhista):** "A união Google + Meta fez toda diferença."
-    * **Dra. Fernanda Duarte (Consumidor):** "Meu escritório ganhou identidade..."
+**7. SECTION 6 (Target Audience)**
+* **Style:** Simple Dark Section with Gold accents.
+* **Copy:**
+    * **Title:** "Para Quem É"
+    * **List:**
+        * "Escritórios jurídicos"
+        * "Advogados individuais"
+        * "Profissionais que desejam posicionamento"
+        * "Escritórios que buscam previsibilidade"
+        * "Advogados que querem autoridade digital"
+        * "Quem quer mais oportunidades qualificadas"
 
-**8. FINAL CTA & FORM**
-* **Visual:** Dark Footer Area.
-* **Content:**
-    * **Headline:** "Pronto para fortalecer sua presença digital?"
-    * **Form:** Simple inputs (Nome, Email, WhatsApp) designed elegantly (transparent background inputs with gold borders).
-    * **Button:** "Receba seu diagnóstico estratégico"
+**8. SECTION 7 (Testimonials)**
+* **Style:** Light Background. Grid of cards with Lawyer Photos.
+* **Copy:**
+    * **Card 1:** "Dr. Gustavo Leal — Direito Civil: 'Depois da estratégia, meu escritório passou a ser encontrado por pessoas realmente interessadas. Muito mais organização e previsibilidade.'"
+    * **Card 2:** "Dra. Juliana Andrade — Direito de Família: 'O BOT humanizado reduziu meu tempo com atendimentos repetitivos. Minha comunicação ficou mais clara e meu nome mais forte na região.'"
+    * **Card 3:** "Dr. Ricardo Alencar — Trabalhista: 'A união Google + Meta fez toda diferença. Foi a primeira vez que tive oportunidades consistentes vindas do digital.'"
+    * **Card 4:** "Dra. Fernanda Duarte — Consumidor: 'Meu escritório ganhou identidade e posicionamento. Hoje sou muito mais encontrada na minha área de atuação.'"
 
----
-
-### 🚀 EXECUTION INSTRUCTION
-Generate the HTML/React code.
-* Use `font-serif` for headings to match the LawFor vibe.
-* Use `bg-slate-900` for dark sections and `bg-[#F5F5F0]` for light sections.
-* Ensure the "Services/Pillars" section has the specific grid layout with one highlighted card.
-* Make it look expensive and professional.
+**9. FINAL CTA & FORM**
+* **Style:** Dark Footer with Gold Button.
+* **Copy:**
+    * **Headline:** "Pronto para fortalecer sua presença digital e atrair oportunidades qualificadas todos os dias?"
+    * **CTA Button:** "Quero fortalecer meu escritório"
+    * **Form Title:** "Receba seu diagnóstico estratégico gratuito"
+    * **Fields:** "Nome completo", "E-mail", "WhatsApp"

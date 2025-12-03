@@ -1,0 +1,128 @@
+**Role:** Senior Frontend Engineer & UI Designer
+**Tech Stack:** React, Tailwind CSS, Lucide React Icons.
+**Font:** 'Outfit', sans-serif (Google Fonts).
+**Design Reference:** "Denteractive" Dribbble Shot (Organic waves, floating elements, clean whitespace).
+**Objective:** Create a high-conversion landing page. **CRITICAL:** Use the EXACT COPY provided below. Do not summarize.
+
+---
+
+### 🎨 DESIGN SYSTEM & COLOR PALETTE (LIGHT MODE)
+* **Background (Main):** `#fcfcfc` (Clean White).
+* **Surface (Cards/Sections):** `#fdfdfd` (Pure White).
+* **Primary Accent (Mint):** `#72e3ad` (Use for Organic Waves, Buttons, Icons).
+* **Secondary Accent:** `#e5e7eb` (Light Gray for borders/dividers).
+* **Text Headings:** `#171717` (Dark Gray/Black).
+* **Text Body:** `#707070` (Medium Gray).
+* **Borders:** `#dfdfdf`.
+* **Font:** `font-family: 'Outfit', sans-serif;`
+
+---
+
+### 🏗️ LAYOUT STRUCTURE & EXACT CONTENT MAPPING
+
+**1. HERO SECTION (Organic & Clean)**
+* **Visual:** Clean White background (`#fcfcfc`) with a large, soft Mint Green (`#72e3ad`) organic wave shape in the background (top right or bottom).
+* **Layout:** 2 Columns. Left: Text. Right: Floating Glassmorphism Element (Abstract Medical/Tech Graph).
+* **Copy:**
+    * **Headline (H1, Dark, Bold):** "Atraia mais pacientes, fortaleça sua presença digital e tenha sua agenda sempre cheia."
+    * **Subheadline (Text-lg, Gray):** "Unimos Google, Meta e BOT humanizado para atrair pacientes qualificados, fortalecer seu nome e organizar seu fluxo de agendamentos."
+    * **CTA Button (Solid Mint `#72e3ad`, Text Dark `#1e2723`):** "Quero mais pacientes qualificados"
+
+**2. SECTION 1 (Awareness - Text Block)**
+* **Background:** `#fdfdfd` (Surface).
+* **Layout:** Centered, clean typography.
+* **Copy:**
+    * **Title (H2):** "Sua Clínica Precisa Ser Encontrada Todos os Dias"
+    * **Body:** "Hoje, os pacientes pesquisam antes de agendar: sintomas, especialidades clínicas, localização e reputação.\nA questão é simples:\n👉 Quando alguém procura sua especialidade no Google… aparece você ou outra clínica?\n👉 Sua comunicação nas redes transmite segurança, confiança e profissionalismo?\nNós criamos a presença digital que sua clínica precisa para atrair pacientes que já estão procurando seus serviços."
+    * **Link/CTA (Text Mint Green):** "Solicitar Sessão Estratégica Gratuita"
+
+**3. SECTION 2 (Who We Are)**
+* **Background:** `#fcfcfc` with decorative Mint Green "plus" signs (+) floating in background.
+* **Layout:** Image Left (Bright professional office), Text Right.
+* **Copy:**
+    * **Title:** "Quem Somos: Casal do Tráfego"
+    * **Text:** "Nós somos o Casal do Tráfego, uma agência de marketing médico especialistas para médicos, clínicas e consultórios desde 2019."
+    * **List (Use Mint Checkmarks):**
+        * "Trabalhamos com Google Ads + Meta Ads"
+        * "Construímos posicionamento médico"
+        * "Ajudamos clínicas a terem agenda cheia"
+        * "Aplicamos automações e BOT humanizado"
+        * "Criamos campanhas éticas, profissionais e sustentáveis"
+    * **Highlight Text:** "Nosso foco é simples: atrair, qualificar e converter pacientes todos os dias."
+    * **CTA Button (Outline Mint):** "Quero melhorar minha presença digital"
+
+**4. SECTION 3 (The Context)**
+* **Background:** `#fdfdfd`.
+* **Layout:** Grid of 4 Icons (Facade, Search, Mobile, Target) with text below.
+* **Copy:**
+    * **Title:** "O Paciente Pesquisa Antes de Agendar"
+    * **Text:** "A internet é hoje:\n🏙️ a fachada da sua clínica\n🔎 o maior buscador de pacientes\n📱 onde sua presença profissional é percebida\n🎯 onde você aparece para pacientes realmente interessados\n\nE quem não está presente estrategicamente… fica invisível.\nPor isso, clínicas com presença digital forte crescem mais rápido, com previsibilidade e segurança, onde o ideal é contratar uma agência especialista em marketing para médicos."
+
+**5. SECTION 4 (The Problems - "Floating Cards" Style)**
+* **Background:** `#fcfcfc`.
+* **Visual:** Center Illustration (Clock/Calendar). Floating "Error" Cards around it (White cards, shadow-md, Red Icons).
+* **Copy (Title):** "O Que Impede Sua Clínica de Crescer"
+* **The Cards (Exact Text):**
+    * "Agenda instável"
+    * "Pacientes pouco qualificados"
+    * "Dependência de indicações"
+    * "Falta de presença no Google"
+    * "Recepção sobrecarregada"
+    * "Falta de posicionamento"
+    * "Concorrência crescente"
+    * "Comunicação inconsistente"
+    * **Resolution Text (Green):** "Nós resolvemos todos esses pontos com estratégia."
+
+**6. SECTION 5 (The Solutions - 4 Cards Grid)**
+* **Background:** `#fdfdfd`.
+* **Layout:** 4 Columns Grid. White Cards (`shadow-sm`, `rounded-2xl`) with Mint Icon Circles.
+* **Title:** "O Que Fazemos (na prática)"
+* **Sub:** "Estratégias profissionais para atrair, qualificar e converter pacientes. Criamos sistemas completos de aquisição de pacientes, focados em: previsibilidade, autoridade, organização de fluxo, crescimento."
+* **Card 1:**
+    * **Title:** "1. Estratégia Digital para Clínicas"
+    * **Content:** "– Diagnóstico completo\n– Posicionamento médico\n– Análise do paciente ideal\n– Estrutura que transmite autoridade\n– Mensagens que conectam e convertem"
+* **Card 2:**
+    * **Title:** "2. Tráfego Pago (Google + Meta)"
+    * **Content:** "Unimos o poder das duas principais plataformas para médicos:\nGoogle Ads: Pacientes em busca ativa, Leads quentes.\nMeta Ads: Fortalecimento de marca, Autoridade, Relacionamento.\nEssa combinação é o que gera resultados reais e previsíveis."
+* **Card 3:**
+    * **Title:** "3. Branding e Autoridade Médica"
+    * **Content:** "– Clareza de comunicação\n– Posicionamento estratégico\n– Narrativa profissional\n– Percepção clara do seu diferencial como médico\nA decisão do paciente é baseada em clareza, confiança e experiência."
+* **Card 4:**
+    * **Title:** "4. BOT de Atendimento Humanizado"
+    * **Content:** "Atendimento rápido, organizado e eficiente.\n✔ Responde 24 horas\n✔ Reduz demanda da recepção\n✔ Qualifica pacientes automaticamente\n✔ Aumenta agendamentos\nClínicas que usam BOT convertem mais."
+
+**7. SECTION 6 (Target Audience)**
+* **Background:** `#fcfcfc`.
+* **Layout:** Simple Check List.
+* **Copy:**
+    * **Title:** "Para Quem É"
+    * **Items:** "Clínicas", "Consultórios", "Médicos de todas as especialidades", "Profissionais que atendem particular", "Quem quer agenda cheia", "Quem quer fortalecer a marca", "Quem quer crescer sem perder credibilidade".
+
+**8. SECTION 7 (Testimonials)**
+* **Background:** `#fdfdfd`.
+* **Layout:** Horizontal Scroll or Grid.
+* **Card Style:** White Card (`shadow-sm`), Dark Text, 5 Mint Stars.
+* **Copy:**
+    * **1. Dra. Mariana Ribeiro – Dermatologista:** "Eu já tinha Instagram, mas não conseguia transformar seguidores em pacientes. Depois da estratégia de tráfego e do BOT de atendimento, minha agenda começou a encher de forma organizada. Hoje atendo apenas o perfil de paciente que realmente busca meus procedimentos."
+    * **2. Dr. Felipe Moura – Ortopedista:** "Sempre tive dificuldade com marketing porque não tinha tempo para pensar nisso. O atendimento estratégico me ajudou a entender o que realmente faltava. Agora, com anúncios bem feitos e automações, recebo leads qualificados todos os dias e minha equipe não se perde no atendimento."
+    * **3. Dra. Ana Paula Camargo – Ginecologista & Obstetra:** "Eu já tinha investido em anúncios antes, mas sem retorno. Com o Casal do Tráfego, finalmente entendi a importância do posicionamento e do conteúdo alinhado com os anúncios. Meus agendamentos cresceram e a clínica ficou muito mais organizada."
+    * **4. Dr. Ricardo Sanches – Cardiologista Clínico:** "A melhor parte foi ter clareza. Eles me mostraram o que minha clínica já tinha, o que faltava e qual seria o caminho mais rápido para crescer. O BOT de atendimento também reduziu as ligações e agilizou os agendamentos. Hoje tenho previsibilidade e mais pacientes certos."
+
+**9. FINAL SECTION (CTA + Form)**
+* **Background:** Large Mint Green Wave (`#72e3ad`).
+* **Layout:** Content inside the wave.
+* **Copy:**
+    * **Headline (Dark Text):** "Pronto para atrair muitos pacientes nos próximos 180 dias?"
+    * **Sub:** "Agende sua Sessão Estratégica Gratuita com o Casal do Tráfego."
+    * **CTA Button (White Bg, Green Text):** "Quero mais pacientes qualificados"
+    * **Form Title:** "Receba sua análise gratuita"
+    * **Form Fields:** "Nome completo", "E-mail", "WhatsApp"
+    * **Form Submit:** "Agendar Sessão Gratuita"
+    * **Footer Text:** "A internet hoje é o que separa clínicas que crescem de clínicas que permanecem invisíveis. O Casal do Tráfego existe para colocar sua clínica na frente, com estratégia, posicionamento e campanhas profissionais. Quando sua marca é vista pelas pessoas certas todos os dias… o crescimento é inevitável."
+
+---
+
+### 🚀 EXECUTION RULES
+1.  **Do NOT replace text** with "Lorem Ipsum". Use the exact copy provided.
+2.  **Use the Light Mode Palette:** Backgrounds `#fcfcfc` and `#fdfdfd`. Text Dark Gray.
+3.  **Apply the Denteractive Vibe:** Use rounded corners (`rounded-3xl`), organic SVG waves between sections, and clean, floating layouts.

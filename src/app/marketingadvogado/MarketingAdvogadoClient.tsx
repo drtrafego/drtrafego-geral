@@ -389,12 +389,13 @@ export default function AdvogadosClient() {
                 </p>
               </div>
             </div>
-            <div className="order-1 md:order-2 relative h-[400px] md:h-[600px] rounded-2xl overflow-hidden bg-gray-100">
-               {/* Placeholder for "Professional looking at tablet" - Using a gradient/icon for now if image missing */}
-               <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                 <ShieldCheck className="w-32 h-32 text-gray-400 opacity-50" />
-               </div>
-               {/* Note: In production, add an <Image /> here */}
+            <div className="order-1 md:order-2 relative h-[400px] md:h-[600px] rounded-2xl overflow-hidden border border-gray-700 shadow-2xl">
+               <Image 
+                 src="/imagem_advogado.png"
+                 alt="Advogado analisando processos digitais"
+                 fill
+                 className="object-cover hover:scale-105 transition-transform duration-500"
+               />
             </div>
           </div>
         </div>
