@@ -30,6 +30,9 @@ async function sendEmailNotification(lead: any) {
         user,
         pass,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     // Formatar número para o link do WhatsApp (adiciona 55 se não tiver)
@@ -183,20 +186,36 @@ async function saveToNeon(lead: any) {
         // Inicializa o cliente Neon DENTRO da função para garantir conexão fresca
         const sql = neon(process.env.DATABASE_URL!);
 
-        // 1. Buscar organization_id e column_id padrão (primeira coluna do quadro)
-        // Isso é necessário porque organization_id e column_id são NOT NULL
-        const defaultColumn = await sql`
+        // 1. Buscar organization_id e column_id da organização principal (PRODUÇÃO)
+        // O usuário utiliza a organização '5026ab39-9cd0-4dde-ba5a-dcf4f51612d5' no seu CRM
+        const targetOrgId = '5026ab39-9cd0-4dde-ba5a-dcf4f51612d5';
+        
+        console.log(`Buscando coluna padrão para a organização: ${targetOrgId}...`);
+
+        let targetColumn = await sql`
             SELECT id, organization_id 
             FROM columns 
+            WHERE organization_id = ${targetOrgId}
             ORDER BY "order" ASC 
             LIMIT 1
         `;
 
-        if (!defaultColumn || defaultColumn.length === 0) {
+        // Fallback: Se não encontrar a organização alvo, busca a primeira disponível (comportamento anterior)
+        if (!targetColumn || targetColumn.length === 0) {
+            console.warn('⚠️ Organização alvo não encontrada. Usando fallback para a primeira organização disponível.');
+            targetColumn = await sql`
+                SELECT id, organization_id 
+                FROM columns 
+                ORDER BY "order" ASC 
+                LIMIT 1
+            `;
+        }
+
+        if (!targetColumn || targetColumn.length === 0) {
             throw new Error('Não foi possível encontrar uma coluna padrão na tabela "columns". Verifique se a tabela existe e tem dados.');
         }
 
-        const { id: columnId, organization_id: organizationId } = defaultColumn[0];
+        const { id: columnId, organization_id: organizationId } = targetColumn[0];
         console.log(`Usando column_id: ${columnId} e organization_id: ${organizationId}`);
 
         // 2. Inserir Lead com os campos obrigatórios
