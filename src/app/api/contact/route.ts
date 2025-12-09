@@ -32,6 +32,10 @@ async function sendEmailNotification(lead: any) {
       },
     });
 
+    // Formatar número para o link do WhatsApp (adiciona 55 se não tiver)
+    const cleanPhone = lead.whatsapp.replace(/\D/g, '');
+    const whatsappLink = `https://wa.me/55${cleanPhone}`;
+
     const mailOptions = {
       from: `"Dr. Tráfego Lead" <${user}>`,
       to,
@@ -42,6 +46,7 @@ async function sendEmailNotification(lead: any) {
         Nome: ${lead.name}
         Email: ${lead.email}
         Telefone: ${lead.whatsapp}
+        Link WhatsApp: ${whatsappLink}
         Data: ${new Date().toLocaleString('pt-BR')}
       `,
       html: `
@@ -59,7 +64,11 @@ async function sendEmailNotification(lead: any) {
             </tr>
             <tr>
               <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>WhatsApp:</strong></td>
-              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${lead.whatsapp}</td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+                <a href="${whatsappLink}" style="color: #0066cc; text-decoration: none; font-weight: bold;" target="_blank">
+                  ${lead.whatsapp}
+                </a>
+              </td>
             </tr>
              <tr>
               <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Data:</strong></td>
