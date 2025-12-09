@@ -63,7 +63,8 @@ export default function MarketingMedicoClient() {
     const isEmailValid = emailRegex.test(currentEmail);
     
     const phoneDigits = currentPhone.replace(/\D/g, '');
-    const isPhoneValid = phoneDigits.length >= 10;
+    // Validação estrita: Aceita apenas 10 (fixo) ou 11 (celular) dígitos
+    const isPhoneValid = phoneDigits.length === 10 || phoneDigits.length === 11;
 
     setIsFormValid(isEmailValid && isPhoneValid);
   };
@@ -597,7 +598,7 @@ export default function MarketingMedicoClient() {
                   <div>
                     <Input 
                       type="tel" 
-                      placeholder="WhatsApp (com DDD)" 
+                      placeholder="DDD + Whatsapp" 
                       className="h-12 rounded-xl bg-[#121212] border-[#292929] text-white placeholder:text-[#a2a2a2] focus:border-[#4ade80] focus:ring-1 focus:ring-[#4ade80]"
                       value={phone}
                       onChange={handlePhoneChange}
