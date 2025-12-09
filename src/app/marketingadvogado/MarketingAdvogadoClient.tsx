@@ -38,7 +38,7 @@ export default function AdvogadosClient() {
     const isEmailValid = emailRegex.test(currentEmail);
     
     const phoneDigits = currentPhone.replace(/\D/g, '');
-    const isPhoneValid = phoneDigits.length >= 10;
+    const isPhoneValid = phoneDigits.length === 10 || phoneDigits.length === 11;
 
     setIsFormValid(isEmailValid && isPhoneValid);
   };
@@ -475,7 +475,7 @@ export default function AdvogadosClient() {
                             type="tel" 
                             value={phone}
                             onChange={handlePhoneChange}
-                            placeholder="(00) 00000-0000" 
+                            placeholder="DDD + Whatsapp" 
                             className="bg-[#0f172a] border-slate-600 text-white placeholder:text-slate-500" 
                             required
                           />
