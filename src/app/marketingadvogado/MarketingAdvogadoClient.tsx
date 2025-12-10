@@ -21,6 +21,7 @@ import {
   Users,
   MessageSquare
 } from "lucide-react";
+import PhoneInputWithFlag from "@/components/PhoneInputWithFlag";
 
 const playfair = Playfair_Display({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -31,43 +32,25 @@ export default function AdvogadosClient() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isPhoneValidState, setIsPhoneValidState] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const validateForm = (currentEmail: string, currentPhone: string) => {
+  const validateForm = (currentEmail: string, currentIsPhoneValid: boolean) => {
     const emailRegex = /\S+@\S+\.\S+/;
     const isEmailValid = emailRegex.test(currentEmail);
-    
-    const phoneDigits = currentPhone.replace(/\D/g, '');
-    const isPhoneValid = phoneDigits.length === 10 || phoneDigits.length === 11;
-
-    setIsFormValid(isEmailValid && isPhoneValid);
+    setIsFormValid(isEmailValid && currentIsPhoneValid);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = e.target.value;
     setEmail(newEmail);
-    validateForm(newEmail, phone);
+    validateForm(newEmail, isPhoneValidState);
   };
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let input = e.target.value.replace(/\D/g, '');
-    if (input.length > 11) {
-      input = input.substring(0, 11);
-    }
-    
-    let formattedPhone = '';
-    if (input.length > 0) {
-      formattedPhone = '(' + input.substring(0, 2);
-    }
-    if (input.length >= 3) {
-      formattedPhone += ') ' + input.substring(2, 7);
-    }
-    if (input.length >= 8) {
-      formattedPhone += '-' + input.substring(7, 11);
-    }
-    
-    setPhone(formattedPhone);
-    validateForm(email, formattedPhone);
+  const handlePhoneChange = (value: string, isValid: boolean) => {
+    setPhone(value);
+    setIsPhoneValidState(isValid);
+    validateForm(email, isValid);
   };
 
   const handleSubmit = (event: any) => {
@@ -470,15 +453,7 @@ export default function AdvogadosClient() {
                       </div>
                       <div className="text-left">
                           <label htmlFor="phone" className="block text-sm font-medium text-slate-300 mb-2">WhatsApp</label>
-                          <Input 
-                            id="phone" 
-                            type="tel" 
-                            value={phone}
-                            onChange={handlePhoneChange}
-                            placeholder="DDD + Whatsapp" 
-                            className="bg-[#0f172a] border-slate-600 text-white placeholder:text-slate-500" 
-                            required
-                          />
+                          <PhoneInputWithFlag value={phone} onChange={handlePhoneChange} className="bg-[#0f172a] text-black" />
                       </div>
                       <Button type="submit" size="lg" className="w-full bg-[#0abf53] hover:bg-[#067934] text-white font-bold py-6 text-lg rounded-lg mt-4 h-auto" disabled={!isFormValid || isLoading}>
                           {isLoading ? (

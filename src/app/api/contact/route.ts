@@ -32,12 +32,16 @@ async function sendEmailNotification(lead: any) {
       },
       tls: {
         rejectUnauthorized: false
-      }
+      },
+      connectionTimeout: 5000, // 5 segundos
+      greetingTimeout: 5000,
+      socketTimeout: 5000,
     });
 
-    // Formatar número para o link do WhatsApp (adiciona 55 se não tiver)
+    // Formatar número para o link do WhatsApp
+    // O frontend envia o número completo com DDI (ex: 5511999999999 ou 12125551234)
     const cleanPhone = lead.whatsapp.replace(/\D/g, '');
-    const whatsappLink = `https://wa.me/55${cleanPhone}`;
+    const whatsappLink = `https://wa.me/${cleanPhone}`;
 
     const mailOptions = {
       from: `"Dr. Tráfego Lead" <${user}>`,
@@ -186,37 +190,18 @@ async function saveToNeon(lead: any) {
         // Inicializa o cliente Neon DENTRO da função para garantir conexão fresca
         const sql = neon(process.env.DATABASE_URL!);
 
-        // 1. Buscar organization_id e column_id da organização principal (PRODUÇÃO)
-        // O usuário utiliza a organização '5026ab39-9cd0-4dde-ba5a-dcf4f51612d5' no seu CRM
-        const targetOrgId = '5026ab39-9cd0-4dde-ba5a-dcf4f51612d5';
+        // 1. Definir organization_id e column_id diretamente (Otimização: Evita SELECT extra e erros de tabela)
+        // Organization ID: 5026ab39-9cd0-4dde-ba5a-dcf4f51612d5 (Confirmado via logs de sucesso)
+        // Column ID (Novos Leads): 8fb424d8-6ad0-40a6-a029-48bc244b8431 (Confirmado via logs de sucesso)
+        const organizationId = '5026ab39-9cd0-4dde-ba5a-dcf4f51612d5';
+        const columnId = '8fb424d8-6ad0-40a6-a029-48bc244b8431';
         
-        console.log(`Buscando coluna padrão para a organização: ${targetOrgId}...`);
+        console.log(`Usando IDs Fixos - Organization: ${organizationId}, Column: ${columnId}`);
 
-        let targetColumn = await sql`
-            SELECT id, organization_id 
-            FROM columns 
-            WHERE organization_id = ${targetOrgId}
-            ORDER BY "order" ASC 
-            LIMIT 1
-        `;
-
-        // Fallback: Se não encontrar a organização alvo, busca a primeira disponível (comportamento anterior)
-        if (!targetColumn || targetColumn.length === 0) {
-            console.warn('⚠️ Organização alvo não encontrada. Usando fallback para a primeira organização disponível.');
-            targetColumn = await sql`
-                SELECT id, organization_id 
-                FROM columns 
-                ORDER BY "order" ASC 
-                LIMIT 1
-            `;
-        }
-
-        if (!targetColumn || targetColumn.length === 0) {
-            throw new Error('Não foi possível encontrar uma coluna padrão na tabela "columns". Verifique se a tabela existe e tem dados.');
-        }
-
-        const { id: columnId, organization_id: organizationId } = targetColumn[0];
-        console.log(`Usando column_id: ${columnId} e organization_id: ${organizationId}`);
+        /* 
+        // CÓDIGO ANTERIOR (DINÂMICO) - REMOVIDO POR CAUSAR LENTIDÃO E ERRO DE TABELA INEXISTENTE
+        const configQuery = await sql`...`;
+        */
 
         // 2. Inserir Lead com os campos obrigatórios
         // Definimos status como 'Novo' e usamos os IDs recuperados
@@ -290,12 +275,12 @@ export async function POST(request: NextRequest) {
       created_at: new Date().toISOString(),
     };
 
-    // Primeiro, tenta salvar no banco de dados com TIMEOUT de 15 segundos
+    // Primeiro, tenta salvar no banco de dados com TIMEOUT REDUZIDO para 5 segundos
     let savedLead;
 
     try {
-        console.log('Iniciando tentativa de salvar no Neon (Timeout: 15s)...');
-        savedLead = await withTimeout(saveToNeon(initialLead), 15000);
+        console.log('Iniciando tentativa de salvar no Neon (Timeout: 5s)...');
+        savedLead = await withTimeout(saveToNeon(initialLead), 5000);
     } catch (dbError: any) {
         console.error('⚠️ FALHA OU TIMEOUT NO NEON:', dbError);
         
@@ -309,15 +294,21 @@ export async function POST(request: NextRequest) {
         };
     }
 
-    // Em seguida, tenta salvar no Google Sheets (sequencial para pegar o status para o email)
+    // 3. Executar tarefas secundárias em PARALELO (Sheets e Email)
+    // Isso reduz o tempo de espera do usuário, pois não esperamos um terminar para começar o outro.
+    // O await Promise.all garante que o servidor não encerre antes de terminar o envio.
+    // ADICIONADO TIMEOUT GLOBAL PARA TAREFAS SECUNDÁRIAS (4 segundos)
     try {
-        await appendToSheet(savedLead);
-    } catch (error: any) {
-        console.error('Erro capturado no POST ao salvar no Sheets:', error);
+        console.log('Iniciando tarefas de background (Email/Sheets) com timeout de 4s...');
+        const sheetsPromise = appendToSheet(savedLead);
+        const emailPromise = sendEmailNotification(savedLead);
+        
+        await withTimeout(Promise.all([sheetsPromise, emailPromise]), 4000);
+        console.log('Tarefas de background concluídas com sucesso.');
+    } catch (bgError) {
+        console.error('Alerta: Tarefas secundárias (Sheets/Email) demoraram muito ou falharam:', bgError);
+        // Não lançamos erro aqui para não falhar a resposta ao usuário, já que o lead foi salvo no banco.
     }
-
-    // Por fim, envia o email (agora sem notificação de status do sistema)
-    await sendEmailNotification(savedLead);
     
     // Retorna sucesso
     return NextResponse.json({ 

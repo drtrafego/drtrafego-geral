@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Eye, Target, TrendingUp, CheckCircle, XCircle, Store, Search, Building, Rocket, ClipboardList, ShieldCheck, Anchor, Scaling, CircleDollarSign, Building2, RotateCw, SearchX, FileText, CalendarDays, Smartphone } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import PhoneInputWithFlag from "@/components/PhoneInputWithFlag";
 
 
 
@@ -46,43 +47,25 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isPhoneValidState, setIsPhoneValidState] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const validateForm = (currentEmail: string, currentPhone: string) => {
+  const validateForm = (currentEmail: string, currentIsPhoneValid: boolean) => {
     const emailRegex = /\S+@\S+\.\S+/;
     const isEmailValid = emailRegex.test(currentEmail);
-    
-    const phoneDigits = currentPhone.replace(/\D/g, '');
-    const isPhoneValid = phoneDigits.length === 10 || phoneDigits.length === 11;
-
-    setIsFormValid(isEmailValid && isPhoneValid);
+    setIsFormValid(isEmailValid && currentIsPhoneValid);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = e.target.value;
     setEmail(newEmail);
-    validateForm(newEmail, phone);
+    validateForm(newEmail, isPhoneValidState);
   };
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let input = e.target.value.replace(/\D/g, '');
-    if (input.length > 11) {
-      input = input.substring(0, 11);
-    }
-    
-    let formattedPhone = '';
-    if (input.length > 0) {
-      formattedPhone = '(' + input.substring(0, 2);
-    }
-    if (input.length >= 3) {
-      formattedPhone += ') ' + input.substring(2, 7);
-    }
-    if (input.length >= 8) {
-      formattedPhone += '-' + input.substring(7, 11);
-    }
-    
-    setPhone(formattedPhone);
-    validateForm(email, formattedPhone);
+  const handlePhoneChange = (value: string, isValid: boolean) => {
+    setPhone(value);
+    setIsPhoneValidState(isValid);
+    validateForm(email, isValid);
   };
 
   const handleSubmit = (event: any) => {
@@ -425,7 +408,7 @@ export default function Home() {
                          </div>
                          <div>
                              <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">WhatsApp</label>
-                             <Input id="phone" name="phone" type="tel" placeholder="DDD + Whatsapp" required className="bg-white/5 border-white/20 focus:ring-purple-500 focus:border-purple-500" value={phone} onChange={handlePhoneChange} />
+                             <PhoneInputWithFlag value={phone} onChange={handlePhoneChange} />
                          </div>
                          <Button type="submit" size="lg" className="w-full bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-[0_0_30px_rgba(156,39,176,0.8)] h-auto min-h-14 py-4 text-lg whitespace-normal disabled:bg-gray-500 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={!isFormValid || isLoading}>
                              {isLoading ? (

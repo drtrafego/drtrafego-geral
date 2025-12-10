@@ -28,6 +28,7 @@ import {
   AlertCircle,
   ScanLine // New icon for Awareness section
 } from "lucide-react";
+import PhoneInputWithFlag from "@/components/PhoneInputWithFlag";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -56,44 +57,25 @@ export default function MarketingMedicoClient() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isPhoneValidState, setIsPhoneValidState] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const validateForm = (currentEmail: string, currentPhone: string) => {
+  const validateForm = (currentEmail: string, currentIsPhoneValid: boolean) => {
     const emailRegex = /\S+@\S+\.\S+/;
     const isEmailValid = emailRegex.test(currentEmail);
-    
-    const phoneDigits = currentPhone.replace(/\D/g, '');
-    // Validação estrita: Aceita apenas 10 (fixo) ou 11 (celular) dígitos
-    const isPhoneValid = phoneDigits.length === 10 || phoneDigits.length === 11;
-
-    setIsFormValid(isEmailValid && isPhoneValid);
+    setIsFormValid(isEmailValid && currentIsPhoneValid);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = e.target.value;
     setEmail(newEmail);
-    validateForm(newEmail, phone);
+    validateForm(newEmail, isPhoneValidState);
   };
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let input = e.target.value.replace(/\D/g, '');
-    if (input.length > 11) {
-      input = input.substring(0, 11);
-    }
-    
-    let formattedPhone = '';
-    if (input.length > 0) {
-      formattedPhone = '(' + input.substring(0, 2);
-    }
-    if (input.length >= 3) {
-      formattedPhone += ') ' + input.substring(2, 7);
-    }
-    if (input.length >= 8) {
-      formattedPhone += '-' + input.substring(7, 11);
-    }
-    
-    setPhone(formattedPhone);
-    validateForm(email, formattedPhone);
+  const handlePhoneChange = (value: string, isValid: boolean) => {
+    setPhone(value);
+    setIsPhoneValidState(isValid);
+    validateForm(email, isValid);
   };
 
   const handleSubmit = (event: any) => {
@@ -596,14 +578,7 @@ export default function MarketingMedicoClient() {
                     />
                   </div>
                   <div>
-                    <Input 
-                      type="tel" 
-                      placeholder="DDD + Whatsapp" 
-                      className="h-12 rounded-xl bg-[#121212] border-[#292929] text-white placeholder:text-[#a2a2a2] focus:border-[#4ade80] focus:ring-1 focus:ring-[#4ade80]"
-                      value={phone}
-                      onChange={handlePhoneChange}
-                      maxLength={15}
-                    />
+                    <PhoneInputWithFlag value={phone} onChange={handlePhoneChange} className="bg-[#121212] text-black" />
                   </div>
                   <Button 
                     type="submit" 
